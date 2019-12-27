@@ -1,10 +1,9 @@
 import * as THREE from 'three';
-import Controls from './controls.js';
+// import { Scene, WebGLRenderer, PerspectiveCamera} from 'three';
+import Player from './player';
 
 export default class Game {
     constructor(rootElement){
-        this.control = new Controls();
-
         this.scene =  new THREE.Scene();
 
         this.renderer = new THREE.WebGLRenderer();
@@ -20,12 +19,16 @@ export default class Game {
 
         this.objects = {}
 
+
+        this.player = new Player(this.scene);
+
         this.resize();
         window.addEventListener('resize', this.resize.bind(this)); 
 
         this.addObjects();
 
         this.run();
+        console.log(this);
     }
 
     resize(){
@@ -37,14 +40,16 @@ export default class Game {
     }
 
     addObjects() {
-        const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-        const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-        this.objects.cube = new THREE.Mesh( geometry, material );
-        this.scene.add( this.objects.cube );
+        // const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+        // const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+        // this.objects.cube = new THREE.Mesh( geometry, material );
+        // this.scene.add( this.objects.cube );
     }
 
     run(time) {
         requestAnimationFrame((time) => this.run(time));
+
+        this.player.move()
 
         // this.objects.cube.rotation.x += 0.01;
         // this.objects.cube.rotation.y += 0.01;
