@@ -45,6 +45,7 @@ export default class Controls {
         this.coord.mouse.y = event.clientY - window.innerHeight/2;
         // let mX = this.coord.mouse.x - 0;
         // let mY = this.coord.mouse.y - 0;
-        console.log(Math.atan2(this.coord.mouse.x, this.coord.mouse.y) / (Math.PI / 180));
+        this.direction = Math.atan2(this.coord.mouse.x, this.coord.mouse.y) + Math.PI;
+        // console.log(Math.atan2(this.coord.mouse.x, this.coord.mouse.y) / (Math.PI / 180));
     }
 }
