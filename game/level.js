@@ -2,13 +2,20 @@ import * as THREE from 'three';
 
 export default class Level {
     constructor(){
+        this.lightList = [];
         this.meshList = [];
 
         // this.mesh.add(player);
-        this.meshList.push(this.createLightGlobal());
+        this.lightList.push(this.createLightGlobal());
 
         this.meshList.push(this.createPlane());
+        this.meshList.push(this.createBox(5, 3));
+        this.meshList.push(this.createBox(5, 4));
         this.meshList.push(this.createBox(5, 5));
+        this.meshList.push(this.createBox(5, 6));
+        this.meshList.push(this.createBox(4, 6));
+        this.meshList.push(this.createBox(3, 6));
+        this.meshList.push(this.createBox(2, 6));
     }
 
     createLightGlobal() {
@@ -19,7 +26,7 @@ export default class Level {
 
     createPlane() {
         const geometry = new THREE.PlaneGeometry( 100, 100, 32 );
-        const material = new THREE.MeshLambertMaterial( {color: 0x34bb34, side: THREE.DoubleSide} );
+        const material = new THREE.MeshLambertMaterial( {color: 0x3c3c3c, side: THREE.DoubleSide} );
         let plane =  new THREE.Mesh( geometry, material );
         plane.receiveShadow = true;
         plane.name = "plane";
