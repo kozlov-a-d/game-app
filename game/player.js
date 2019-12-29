@@ -7,11 +7,14 @@ export default class Player {
     constructor(scene, bullets) {
         this.config = {
             moveSpeed: 0.2,
-            rotationSpeed: 360,
+            rotationSpeed: 1,
         }
+        this.score = 0;
         this.controls = new Controls();
         this.mesh = this.createMesh();
+        this.mesh.name = 'Player';
         this.light = this.createLight();
+        this.light.name = 'PlayerLight';
 
         scene.add(this.mesh);
         scene.add(this.light);
@@ -19,6 +22,9 @@ export default class Player {
         document.addEventListener('click', (event) => {
             event.preventDefault();
             this.shoot(scene, bullets);
+            if (this.score > 0) {
+                this.score -= 100;
+            } 
             return false;
         })
     }
@@ -32,8 +38,8 @@ export default class Player {
         const playerMaterial = new THREE.MeshLambertMaterial( { color: 0x34495e } );
         player = new THREE.Mesh( playerGeometry, playerMaterial );
         player.position.z = 0.501;
-        // player.castShadow = true;
-        // player.receiveShadow = true;
+        player.position.x = 18;
+        player.position.y = 18;
 
         const gunGeometry = new THREE.BoxGeometry( 0.3, 1.1, 0.3 );
         const gunMaterial = new THREE.MeshLambertMaterial( { color: 0x364249 } );
@@ -55,6 +61,8 @@ export default class Player {
     }
 
     move() {
+        // console.log(this.controls.direction);
+        // if (Math.abs(this.controls.direction - this.mesh.rotation.z)
         this.mesh.rotation.z = this.controls.direction;
         if (this.controls.up) { this.mesh.position.y += this.config.moveSpeed; }
         if (this.controls.down) { this.mesh.position.y -= this.config.moveSpeed; }
@@ -64,6 +72,7 @@ export default class Player {
 
     shoot(scene, bullets){
         let bullet = new Bullets(this.mesh);
+        bullet.mesh.name = 'Bullet';
         scene.add(bullet.mesh);
         bullets.push(bullet);
     }
