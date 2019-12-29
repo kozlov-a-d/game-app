@@ -5,6 +5,7 @@ import Player from './player';
 
 export default class Game {
     constructor(rootElement){
+        this.time = 0;
         this.scene = new THREE.Scene();
 
         this.renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -18,11 +19,11 @@ export default class Game {
 
         this.container = rootElement;
         this.container.appendChild(this.renderer.domElement);
+
+        this.bullets = [];
         
         // add player
-        this.player = new Player();
-        this.scene.add(this.player.mesh);
-        this.scene.add(this.player.light);
+        this.player = new Player(this.scene, this.bullets);
 
         // add level
         this.level = new Level(this.player);
@@ -30,14 +31,14 @@ export default class Game {
         this.level.meshList.forEach((item) => { this.scene.add(item); });
 
         this.resize();
-        window.addEventListener('resize', this.resize.bind(this)); 
-
+        window.addEventListener('resize', this.resize.bind(this));
+       
         this.run();
     }
 
     resize(){
-        var w = window.innerWidth;
-        var h = window.innerHeight;
+        const w = window.innerWidth;
+        const h = window.innerHeight;
         this.renderer.setSize( w, h );
         this.camera.aspect = w / h;
         this.camera.updateProjectionMatrix();
@@ -49,8 +50,17 @@ export default class Game {
     }
 
     run(time) {
+        const deltaTime = time - this.time;
+        this.time = time;
         this.player.update(this.level.meshList);
         this.cameraFollowPlayer();
+        this.bullets.forEach((bullet, index) => {
+            if (!bullet.update(deltaTime)) {
+                this.scene.remove(this.bullets[index]);
+                this.bullets.splice(index, 1);
+                console.log(this.bullets);
+            }
+        });
         this.renderer.render( this.scene, this.camera );
         requestAnimationFrame((time) => this.run(time));
     }

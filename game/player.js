@@ -1,16 +1,26 @@
 import * as THREE from 'three';
 // import { BoxGeometry, MeshBasicMaterial, Mesh} from 'three';
-import controls from './controls.js';
+import Controls from './controls.js';
+import Bullets from './bullets.js';
 
 export default class Player {
-    constructor() {
+    constructor(scene, bullets) {
         this.config = {
             moveSpeed: 0.2,
             rotationSpeed: 360,
         }
-        this.controls = new controls();
+        this.controls = new Controls();
         this.mesh = this.createMesh();
         this.light = this.createLight();
+
+        scene.add(this.mesh);
+        scene.add(this.light);
+
+        document.addEventListener('click', (event) => {
+            event.preventDefault();
+            this.shoot(scene, bullets);
+            return false;
+        })
     }
 
     /**
@@ -50,6 +60,12 @@ export default class Player {
         if (this.controls.down) { this.mesh.position.y -= this.config.moveSpeed; }
         if (this.controls.left) { this.mesh.position.x -= this.config.moveSpeed; }
         if (this.controls.right) { this.mesh.position.x += this.config.moveSpeed; }
+    }
+
+    shoot(scene, bullets){
+        let bullet = new Bullets(this.mesh);
+        scene.add(bullet.mesh);
+        bullets.push(bullet);
     }
 
     /**
