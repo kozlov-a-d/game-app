@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-// import { BoxGeometry, MeshBasicMaterial, Mesh} from 'three';
 import Controls from './controls.js';
 import Bullets from './bullets.js';
 
@@ -61,8 +60,6 @@ export default class Player {
     }
 
     move() {
-        // console.log(this.controls.direction);
-        // if (Math.abs(this.controls.direction - this.mesh.rotation.z)
         this.mesh.rotation.z = this.controls.direction;
         if (this.controls.up) { this.mesh.position.y += this.config.moveSpeed; }
         if (this.controls.down) { this.mesh.position.y -= this.config.moveSpeed; }
