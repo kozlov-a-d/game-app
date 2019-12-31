@@ -24,12 +24,16 @@ export default class Game {
         this.level.lightList.forEach((item) => { this.scene.add(item); });
         this.level.meshList.forEach((item) => { this.scene.add(item); });
 
-        this.spawnEnemy(-150, -150);
-
         this.scoreContainer = document.getElementById('score');
 
         this.onResize();
         window.addEventListener('resize', this.onResize.bind(this));
+
+        // this.spawnEnemy(-150, -150);
+        this.spawnEnemy(23, 23);
+        this.spawnEnemy(26, 26);
+        // for (let i = 0; i < 10; i++ ) { this.spawnEnemy(); }
+        console.log(this);
 
         this.run();
     }
@@ -91,10 +95,10 @@ export default class Game {
         const deltaTime = time - this.time;
         this.time = time;
 
-        this.player.update(this.level.meshList);
+        this.player.update(this.level.meshList, this.arrayEnemy);
         this.cameraFollowTarget(this.player.mesh);
 
-        if(Math.random() <= 0.01) { console.log('spawnEnemy'); this.spawnEnemy(); }
+        // if(Math.random() <= 0.01) { console.log('spawnEnemy'); this.spawnEnemy(); }
 
         this.arrayBullets.forEach((bullet, index) => {
             let bulletUpdate = bullet.update(deltaTime, this.level.meshList, this.arrayEnemy);

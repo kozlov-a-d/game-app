@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import Utils from './utils.js';
 import Controls from './controls.js';
 import Bullets from './bullets.js';
 
@@ -10,8 +11,10 @@ export default class Player {
         }
         this.score = 0;
         this.controls = new Controls();
+
         this.mesh = this.createMesh();
         this.mesh.name = 'Player';
+
         this.light = this.createLight();
         this.light.name = 'PlayerLight';
 
@@ -78,43 +81,21 @@ export default class Player {
      * Update player
      * @param {Array.<THREE.Mesh>} meshListToCollision 
      */
-    update(meshListToCollision) {
+    update(meshListToCollision, enemyList) {
         let oldPosition = {
             x: this.mesh.position.x,
             y: this.mesh.position.y,
         }
         this.move();
-        if (this.detectCollision(meshListToCollision)) {
+        if (Utils.detectCollision(this.mesh, meshListToCollision)) {
             this.mesh.position.x = oldPosition.x;
             this.mesh.position.y = oldPosition.y;
         }
-
+        if (Utils.detectCollision(this.mesh, enemyList)) {
+            this.mesh.position.x = oldPosition.x;
+            this.mesh.position.y = oldPosition.y;
+        }
         this.light.position.x = this.mesh.position.x;
         this.light.position.y = this.mesh.position.y;
-    }
-
-    /**
-     * Detect collision player  with other mesh
-     * @param {Array.<THREE.Mesh>} meshListToCollision 
-     */
-    detectCollision(meshListToCollision) {
-        let isCollision = false;
-        this.mesh.geometry.computeBoundingBox(); 
-        this.mesh.updateMatrixWorld();
-        let box1 = this.mesh.geometry.boundingBox.clone();
-        box1.applyMatrix4(this.mesh.matrixWorld);
-
-        meshListToCollision.forEach((item) => {
-            item.geometry.computeBoundingBox();
-            item.updateMatrixWorld();
-        
-            let box2 = item.geometry.boundingBox.clone();
-            box2.applyMatrix4(item.matrixWorld);
-
-            let result = box1.intersectsBox(box2);
-            if (result) isCollision = result;
-        });
-
-        return isCollision;
     }
 }

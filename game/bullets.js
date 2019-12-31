@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import Utils from './utils.js';
 
 export default class Bullets {
     /**
@@ -27,10 +28,11 @@ export default class Bullets {
 
     update(deltaTime, meshListToCollision, enemyList){
         this.lifetime -= deltaTime;
-        if (this.detectCollision(enemyList)) {
-            return 'hit' + this.detectCollision(enemyList);
+        const collisionWithEnemy = Utils.detectCollision(this.mesh, enemyList);
+        if (collisionWithEnemy) {
+            return 'hit' + collisionWithEnemy;
         }
-        if (this.detectCollision(meshListToCollision)) {
+        if (Utils.detectCollision(this.mesh,meshListToCollision)) {
             return false;
         }
         if (this.lifetime > 0) {
@@ -40,31 +42,5 @@ export default class Bullets {
             return true;
         } 
         return false;
-    }
-
-    /**
-     * Detect collision player  with other mesh
-     * @param {Array.<THREE.Mesh>} meshListToCollision 
-     */
-    detectCollision(meshListToCollision) {
-        let isCollision = false;
-        this.mesh.geometry.computeBoundingBox(); 
-        this.mesh.updateMatrixWorld();
-        let box1 = this.mesh.geometry.boundingBox.clone();
-        box1.applyMatrix4(this.mesh.matrixWorld);
-
-        meshListToCollision.forEach((item, index) => {
-            item.geometry.computeBoundingBox();
-            item.updateMatrixWorld();
-        
-            let box2 = item.geometry.boundingBox.clone();
-            box2.applyMatrix4(item.matrixWorld);
-
-            let result = box1.intersectsBox(box2);
-            // if (result) isCollision = result;
-            if (result) isCollision = index;
-        });
-
-        return isCollision;
     }
 }
