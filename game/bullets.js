@@ -6,22 +6,25 @@ export default class Bullets {
      * 
      * @param {THREE.Mesh} parent player.mesh or guns.mesh
      */
-    constructor(parent) {
-        this.position = parent.position;
-        this.direction = parent.rotation.z;
-        this.speed = 0.8;
-        this.mesh = this.createMesh();
-        this.mesh.name = 'Bullet';
+    constructor(posX = 0, posY = 0, posZ = 0, angleZ = 0) {
+        this.speed = 50;
         this.lifetime = 1500;
+        this.movement = {
+            x: this.speed * Math.cos(angleZ),
+            y: this.speed * Math.sin(angleZ) * -1,
+        };
+        this.mesh = this.createMesh(posX, posY, posZ, angleZ);
+        this.mesh.name = 'Bullet';
     }
 
-    createMesh() {
+    createMesh(posX, posY, posZ, angleZ) {
         const geometry = new THREE.SphereGeometry( 0.1, 6, 6 );
         const material = new THREE.MeshBasicMaterial( {color: 0xffffff} );
         let sphere = new THREE.Mesh( geometry, material );
-        sphere.position.x = this.position.x;
-        sphere.position.y = this.position.y;
-        sphere.position.z = this.position.z;
+        sphere.position.x = posX;
+        sphere.position.y = posY;
+        sphere.position.z = posZ;
+        sphere.rotation.z = angleZ;
 
         return sphere
     }
@@ -36,9 +39,8 @@ export default class Bullets {
             return false;
         }
         if (this.lifetime > 0) {
-            this.mesh.position.y += this.speed * Math.cos(this.direction);
-            this.mesh.position.x += this.speed * Math.sin(this.direction) * -1;  
-            // console.log(this.lifetime);
+            this.mesh.position.y += this.movement.x * (deltaTime/1000);
+            this.mesh.position.x += this.movement.y * (deltaTime/1000);  
             return true;
         } 
         return false;

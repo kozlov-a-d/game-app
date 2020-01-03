@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 import Level from './level';
 import Player from './player';
-import Enemy from './enemy.js';
+import Enemy from './enemy';
+import AudioManager from './audio-manager';
 
 export default class Game {
     constructor(rootElement){
@@ -10,6 +11,10 @@ export default class Game {
         this.scene = new THREE.Scene();
         this.renderer = this.initRenderer();
         this.camera = this.initCamera();
+
+        this.audioManager = new AudioManager(this.camera);
+        
+
         this.container = rootElement ? rootElement : document.querySelector('body');
         this.container.appendChild(this.renderer.domElement);
 
@@ -17,7 +22,7 @@ export default class Game {
         this.arrayBullets = [];
         
         // add player
-        this.player = new Player(this.scene, this.arrayBullets);
+        this.player = new Player(this.scene, this.arrayBullets, this.audioManager);
 
         // add level
         this.level = new Level(this.player);
@@ -95,7 +100,7 @@ export default class Game {
         const deltaTime = time - this.time;
         this.time = time;
 
-        this.player.update(this.level.meshList, this.arrayEnemy);
+        this.player.update(deltaTime, this.level.meshList, this.arrayEnemy);
         this.cameraFollowTarget(this.player.mesh);
 
         // if(Math.random() <= 0.01) { console.log('spawnEnemy'); this.spawnEnemy(); }
@@ -122,4 +127,5 @@ export default class Game {
     }
 }
 
+console.log('asdad'); 
 new Game(document.getElementById('game'));

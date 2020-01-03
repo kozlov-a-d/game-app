@@ -1,10 +1,13 @@
 export default class Controls {
     constructor() {
-        this.up = false;
-        this.down = false;
-        this.left = false;
-        this.right = false;
-        this.fire = false;
+        this.states = {
+            up: false,
+            down: false,
+            left: false,
+            right: false,
+            reload: false,
+            fire: false,
+        }
         this.direction = 0;
         this.keyMap = new Map([
             [37,'left'],  // arrow left
@@ -15,9 +18,13 @@ export default class Controls {
             [68,'right'], // d
             [87,'up'],    // w
             [83,'down'],  // s
+            [82,'reload'],   // reload
             [32,'fire']   // space
         ]);
         this.coord = { mouse: {}, center: {} }; 
+
+        this.onFireClick = (event) => {};
+        this.onKeyPress = (event) => {};
 
         this.calcCoordCenter();
         window.addEventListener('resize', this.calcCoordCenter.bind(this)); 
@@ -25,6 +32,11 @@ export default class Controls {
         document.addEventListener('keydown', (event) => this.updateKey(event, true));
         document.addEventListener('keyup', (event) => this.updateKey(event, false));
         document.addEventListener('mousemove', (event) => this.updateMouse(event));
+        document.addEventListener('click', (event) => {
+            event.preventDefault();
+            this.onFireClick(event);
+            return false;
+        });
     }
 
     calcCoordCenter() {
@@ -36,7 +48,8 @@ export default class Controls {
         if(this.keyMap.has(event.keyCode)) {
             event.preventDefault();
             event.stopPropagation();
-            this[this.keyMap.get(event.keyCode)] = pressed;
+            this.states[this.keyMap.get(event.keyCode)] = pressed;
+            this.onKeyPress(this.states);
         }
     }
 

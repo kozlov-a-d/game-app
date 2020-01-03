@@ -2,10 +2,14 @@
     "scripts": {
         "build": "yarn encore dev",
         "watch": "yarn encore dev --watch",
-        "serve": "yarn encore dev-server --port 3005 --disable-host-check"
+        "serve": "yarn encore dev --watch"
     },
     "devDependencies": {
-        "@symfony/webpack-encore": "^0.28.2"
+        "@symfony/webpack-encore": "^0.28.2",
+        "browser-sync": "^2.26.7",
+        "browser-sync-webpack-plugin": "^2.2.2",
+        "node-sass": "^4.13.0",
+        "sass-loader": "^7.0.1"
     },
     "dependencies": {
         "three": "^0.112.1"
