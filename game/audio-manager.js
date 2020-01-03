@@ -13,7 +13,8 @@ export default class AudioManager {
             weapons: {
                 BerettaM9: {
                     fire: '',
-                    reload: ''
+                    reload: '',
+                    misfire: ''
                 }
             }
         };
@@ -25,7 +26,6 @@ export default class AudioManager {
             soundFire.setBuffer( buffer );
             soundFire.setVolume( 0.5 );
             soundFire.offset =  0.015;
-            console.log('loaded');
         });
 
         let soundReload = new THREE.Audio( this.listener );
@@ -34,7 +34,14 @@ export default class AudioManager {
             soundReload.setBuffer( buffer );
             soundReload.setVolume( 1 );
             soundReload.offset =  0;
-            console.log('loaded');
+        });
+
+        let soundMisfire = new THREE.Audio( this.listener );
+        this.sounds.weapons.BerettaM9.misfire = soundMisfire;
+        this.audioLoader.load("./build/audio/weapon--beretta-m9--misfire.mp3", function( buffer ) {
+            soundMisfire.setBuffer( buffer );
+            soundMisfire.setVolume( 1 );
+            soundMisfire.offset =  0;
         });
 
     }

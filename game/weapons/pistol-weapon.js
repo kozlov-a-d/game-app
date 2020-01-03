@@ -58,7 +58,17 @@ export default class PistolWeapon extends AbstractWeapon{
                 }
                 audioManager.sounds.weapons[this.id].fire.play();
             } else {
-                this.reload(audioManager);
+
+                if (this.parent.ammo[this.ammoType] > 0) {
+                    // если есть патроны для перезарядки 
+                    this.reload(audioManager);
+                } else {
+                    if ( audioManager.sounds.weapons[this.id].misfire.isPlaying ) { 
+                        audioManager.sounds.weapons[this.id].misfire.stop();
+                    }
+                    audioManager.sounds.weapons[this.id].misfire.play();
+                }
+                
             }
         }
     }
