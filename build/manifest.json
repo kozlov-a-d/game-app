@@ -1,5 +1,9 @@
 {
   "app.js": "/app.js",
   "audio/weapon--beretta-m9--shoot.mp3": "/./audio/weapon--beretta-m9--shoot.mp3",
-  "audio/weapon--beretta-m9--shoot.ogg": "/./audio/weapon--beretta-m9--shoot.ogg"
+  "audio/weapon--beretta-m9--shoot.ogg": "/./audio/weapon--beretta-m9--shoot.ogg",
+  "audio/weapon--beretta-m9--reload.mp3.crdownload": "/./audio/weapon--beretta-m9--reload.mp3.crdownload",
+  "audio/weapon--beretta-m9--reload.mp3": "/./audio/weapon--beretta-m9--reload.mp3",
+  "audio/weapon--beretta-m9--reload (mp3cut.net).mp3.crdownload": "/./audio/weapon--beretta-m9--reload (mp3cut.net).mp3.crdownload",
+  "audio/weapon--beretta-m9--reload (mp3cut.net).mp3": "/./audio/weapon--beretta-m9--reload (mp3cut.net).mp3"
 }

@@ -114,5 +114,6 @@ export default class Player {
         }
         this.light.position.x = this.mesh.position.x;
         this.light.position.y = this.mesh.position.y;
+        this.currentWeapons.update(deltaTime);
     }
 }

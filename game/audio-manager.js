@@ -19,13 +19,21 @@ export default class AudioManager {
         };
 
         // create a global audio source
-        let sound = new THREE.Audio( this.listener );
-        this.sounds.weapons.BerettaM9.fire = sound;
-
+        let soundFire = new THREE.Audio( this.listener );
+        this.sounds.weapons.BerettaM9.fire = soundFire;
         this.audioLoader.load("./build/audio/weapon--beretta-m9--shoot.mp3", function( buffer ) {
-            sound.setBuffer( buffer );
-            sound.setVolume( 0.5 );
-            sound.offset =  0.015;
+            soundFire.setBuffer( buffer );
+            soundFire.setVolume( 0.5 );
+            soundFire.offset =  0.015;
+            console.log('loaded');
+        });
+
+        let soundReload = new THREE.Audio( this.listener );
+        this.sounds.weapons.BerettaM9.reload = soundReload;
+        this.audioLoader.load("./build/audio/weapon--beretta-m9--reload.mp3", function( buffer ) {
+            soundReload.setBuffer( buffer );
+            soundReload.setVolume( 1 );
+            soundReload.offset =  0;
             console.log('loaded');
         });
 

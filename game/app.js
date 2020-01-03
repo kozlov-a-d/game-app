@@ -3,6 +3,7 @@ import Level from './level';
 import Player from './player';
 import Enemy from './enemy';
 import AudioManager from './audio-manager';
+import UI from './ui';
 
 export default class Game {
     constructor(rootElement){
@@ -29,8 +30,6 @@ export default class Game {
         this.level.lightList.forEach((item) => { this.scene.add(item); });
         this.level.meshList.forEach((item) => { this.scene.add(item); });
 
-        this.scoreContainer = document.getElementById('score');
-
         this.onResize();
         window.addEventListener('resize', this.onResize.bind(this));
 
@@ -39,6 +38,8 @@ export default class Game {
         this.spawnEnemy(26, 26);
         // for (let i = 0; i < 10; i++ ) { this.spawnEnemy(); }
         console.log(this);
+
+        this.ui = new UI();
 
         this.run();
     }
@@ -91,11 +92,6 @@ export default class Game {
         this.scene.add(enemy.mesh);
     }
 
-    updateScorePerFrame() {
-        if (this.player.score > 0) { this.player.score--; } 
-        this.scoreContainer.innerText = 'score: ' + this.player.score;
-    }
-
     run(time) {
         const deltaTime = time - this.time;
         this.time = time;
@@ -121,7 +117,7 @@ export default class Game {
             }
         });
 
-        this.updateScorePerFrame();
+        this.ui.update(this);
         this.renderer.render( this.scene, this.camera );
         requestAnimationFrame((time) => this.run(time));
     }
