@@ -52,6 +52,12 @@ export default class Level {
         ];
 
         this.meshList.push(this.createPlane());
+
+        this.texture = new THREE.TextureLoader().load( 'build/assets/images/wall0008.jpg' );
+        this.texture.wrapS = THREE.RepeatWrapping;
+        this.texture.wrapT = THREE.RepeatWrapping;
+        this.texture.repeat.set( 1, 1 );
+
         this.map.forEach((row, rowIndex) => {
             row.forEach((cell, cellIndex) => {
                 if (cell == 1) {
@@ -63,25 +69,33 @@ export default class Level {
     }
 
     createLightGlobal() {
-        const light = new THREE.AmbientLight( 0xffffff, 0.2 );
+        // const light = new THREE.AmbientLight( 0xffffff, 0.4 );
+        const light = new THREE.AmbientLight( 0xffffff, 0.9 );
         light.name = "global light";
         return light;
     }
 
     createPlane() {
+        var texture = new THREE.TextureLoader().load( 'build/assets/images/ground0004.jpg' );
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
+        texture.repeat.set( 8, 8 );
+
         const geometry = new THREE.PlaneGeometry( 100, 100, 32 );
-        const material = new THREE.MeshLambertMaterial( {color: 0x3c3c3c, side: THREE.DoubleSide} );
+        const material = new THREE.MeshLambertMaterial( {color: 0xcccccc, side: THREE.DoubleSide, map: texture} );
         let plane =  new THREE.Mesh( geometry, material );
         plane.position.x = this.map.length/2;
         plane.position.y = this.map.length/2;
         plane.receiveShadow = true;
         plane.name = "plane";
+
         return plane;
     }
 
-    createBox(posX = 1, posY = 1, posZ = 0.5, sizeX = 1, sizeY = 1, sizeZ = 4) {
+    createBox(posX = 1, posY = 1, posZ = 0.5, sizeX = 1, sizeY = 1, sizeZ = 4, texture) {
         const geometry = new THREE.BoxGeometry( sizeX, sizeY, sizeZ );
-        const material = new THREE.MeshLambertMaterial( { color: 0x381a12 } );
+        const material = new THREE.MeshLambertMaterial( { color: 0x29282c } );
+        // const material = new THREE.MeshLambertMaterial( {map: this.texture } );
         let box = new THREE.Mesh( geometry, material )
         box.position.x = posX;
         box.position.y = posY;

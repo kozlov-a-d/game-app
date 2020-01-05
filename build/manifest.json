@@ -1,11 +1,15 @@
 {
   "app.js": "/app.js",
-  "audio/weapon--beretta-m9--shoot.mp3": "/./audio/weapon--beretta-m9--shoot.mp3",
-  "audio/weapon--beretta-m9--shoot.ogg": "/./audio/weapon--beretta-m9--shoot.ogg",
-  "audio/weapon--beretta-m9--reload.mp3.crdownload": "/./audio/weapon--beretta-m9--reload.mp3.crdownload",
-  "audio/weapon--beretta-m9--reload.mp3": "/./audio/weapon--beretta-m9--reload.mp3",
-  "audio/weapon--beretta-m9--reload (mp3cut.net).mp3.crdownload": "/./audio/weapon--beretta-m9--reload (mp3cut.net).mp3.crdownload",
-  "audio/weapon--beretta-m9--reload (mp3cut.net).mp3": "/./audio/weapon--beretta-m9--reload (mp3cut.net).mp3",
-  "audio/weapon--beretta-m9--misfire.mp3.crdownload": "/./audio/weapon--beretta-m9--misfire.mp3.crdownload",
-  "audio/weapon--beretta-m9--misfire.mp3": "/./audio/weapon--beretta-m9--misfire.mp3"
+  "runtime.js": "/runtime.js",
+  "assets/audio/weapon--beretta-m9--misfire.mp3": "/./assets/audio/weapon--beretta-m9--misfire.mp3",
+  "assets/audio/weapon--beretta-m9--reload.mp3": "/./assets/audio/weapon--beretta-m9--reload.mp3",
+  "assets/audio/weapon--beretta-m9--shoot.mp3": "/./assets/audio/weapon--beretta-m9--shoot.mp3",
+  "assets/images/ground0004.jpg": "/./assets/images/ground0004.jpg",
+  "assets/images/wall0008.jpg": "/./assets/images/wall0008.jpg",
+  "assets/models/character.fbx": "/./assets/models/character.fbx",
+  "assets/models/character@death-rifle.fbx": "/./assets/models/character@death-rifle.fbx",
+  "assets/models/character@idle-reload-rifle.fbx": "/./assets/models/character@idle-reload-rifle.fbx",
+  "assets/models/character@idle-rifle.fbx": "/./assets/models/character@idle-rifle.fbx",
+  "assets/models/character@run-backwards-rifle.fbx": "/./assets/models/character@run-backwards-rifle.fbx",
+  "assets/models/character@run-forwards-rifle.fbx": "/./assets/models/character@run-forwards-rifle.fbx"
 }

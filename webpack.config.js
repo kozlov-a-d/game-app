@@ -6,9 +6,13 @@ Encore
     .setOutputPath('build/')
     .setPublicPath('/')
     .addEntry('app', './game/app.js')
-    // .enableSingleRuntimeChunk()
+    .enableSingleRuntimeChunk()
     .enableSassLoader()
-    .copyFiles( [{ from: './game/audio', to: './audio/[path][name].[ext]' } ])
+    .copyFiles([
+        { from: './game/assets/models', to: './assets/models/[path][name].[ext]' },
+        { from: './game/assets/audio', to: './assets/audio/[path][name].[ext]' },
+        { from: './game/assets/images', to: './assets/images/[path][name].[ext]' }
+    ])
     
 ;
 

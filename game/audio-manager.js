@@ -22,7 +22,7 @@ export default class AudioManager {
         // create a global audio source
         let soundFire = new THREE.Audio( this.listener );
         this.sounds.weapons.BerettaM9.fire = soundFire;
-        this.audioLoader.load("./build/audio/weapon--beretta-m9--shoot.mp3", function( buffer ) {
+        this.audioLoader.load('build/assets/audio/weapon--beretta-m9--shoot.mp3', function( buffer ) {
             soundFire.setBuffer( buffer );
             soundFire.setVolume( 0.5 );
             soundFire.offset =  0.015;
@@ -30,7 +30,7 @@ export default class AudioManager {
 
         let soundReload = new THREE.Audio( this.listener );
         this.sounds.weapons.BerettaM9.reload = soundReload;
-        this.audioLoader.load("./build/audio/weapon--beretta-m9--reload.mp3", function( buffer ) {
+        this.audioLoader.load('build/assets/audio/weapon--beretta-m9--reload.mp3', function( buffer ) {
             soundReload.setBuffer( buffer );
             soundReload.setVolume( 1 );
             soundReload.offset =  0;
@@ -38,7 +38,7 @@ export default class AudioManager {
 
         let soundMisfire = new THREE.Audio( this.listener );
         this.sounds.weapons.BerettaM9.misfire = soundMisfire;
-        this.audioLoader.load("./build/audio/weapon--beretta-m9--misfire.mp3", function( buffer ) {
+        this.audioLoader.load('build/assets/audio/weapon--beretta-m9--misfire.mp3', function( buffer ) {
             soundMisfire.setBuffer( buffer );
             soundMisfire.setVolume( 1 );
             soundMisfire.offset =  0;

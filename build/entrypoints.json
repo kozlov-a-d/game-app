@@ -2,6 +2,7 @@
   "entrypoints": {
     "app": {
       "js": [
+        "/runtime.js",
         "/app.js"
       ]
     }
