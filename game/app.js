@@ -1,47 +1,60 @@
 import * as THREE from 'three';
+// import LoaderAssets from './loader-assets';
+import Assets from './loader-assets';
 import Level from './level';
-import Player from './player';
+import Player from './characters/player';
 import Enemy from './enemy';
 import AudioManager from './audio-manager';
 import UI from './ui';
 
 export default class Game {
     constructor(rootElement){
-        this.time = 0;
-        
-        this.scene = new THREE.Scene();
-        this.renderer = this.initRenderer();
-        this.camera = this.initCamera();
+        // new LoaderAssets((resources) => {
+        Assets.onLoad((resources) => {
+            console.log('App.js resources', resources);
+            this.time = 0;
+            
+            this.scene = new THREE.Scene();
+            this.renderer = this.initRenderer();
+            this.camera = this.initCamera();
 
-        this.audioManager = new AudioManager(this.camera);
-        
+            this.audioManager = new AudioManager(this.camera);
+            
 
-        this.container = rootElement ? rootElement : document.querySelector('body');
-        this.container.appendChild(this.renderer.domElement);
+            this.container = rootElement ? rootElement : document.querySelector('body');
+            this.container.appendChild(this.renderer.domElement);
 
-        this.arrayEnemy = [];
-        this.arrayBullets = [];
-        
-        // add player
-        this.player = new Player(this.scene, this.arrayBullets, this.audioManager);
+            this.arrayEnemy = [];
+            this.arrayBullets = [];
+            
+            // add player
+            // this.player = new Player(this.scene, this.arrayBullets, this.audioManager);
+            this.player = new Player('Player');
+            this.player.setPosition(18, 18, 1.201);
+            this.player.appendToScene(this.scene);
 
-        // add level
-        this.level = new Level(this.player);
-        this.level.lightList.forEach((item) => { this.scene.add(item); });
-        this.level.meshList.forEach((item) => { this.scene.add(item); });
+            // mesh.position.z = 0.501;
+            // mesh.position.x = 18;
+            // mesh.position.y = 18;
 
-        this.onResize();
-        window.addEventListener('resize', this.onResize.bind(this));
+            // add level
+            this.level = new Level(this.player);
+            this.level.lightList.forEach((item) => { this.scene.add(item); });
+            this.level.meshList.forEach((item) => { this.scene.add(item); });
 
-        // this.spawnEnemy(-150, -150);
-        this.spawnEnemy(23, 23);
-        this.spawnEnemy(26, 26);
-        // for (let i = 0; i < 10; i++ ) { this.spawnEnemy(); }
-        console.log(this);
+            this.onResize();
+            window.addEventListener('resize', this.onResize.bind(this));
 
-        this.ui = new UI();
+            // this.spawnEnemy(-150, -150);
+            this.spawnEnemy(23, 23);
+            this.spawnEnemy(26, 26);
+            // for (let i = 0; i < 10; i++ ) { this.spawnEnemy(); }
+            // console.log(this);
 
-        this.run();
+            // this.ui = new UI();
+
+            this.run();
+        });
     }
 
     /**
@@ -60,6 +73,7 @@ export default class Game {
      */
     initCamera() {
         let camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.1, 1000 );
+        // let camera = new THREE.OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, 1, 100 );
         camera.position.set( 0, 0, 25 );
         camera.lookAt( 0, 0, 0 );
         return camera;
@@ -80,7 +94,8 @@ export default class Game {
     cameraFollowTarget(target) {
         // this.camera.position.set( target.position.x - 5*Math.sin(target.rotation.z), target.position.y + 5*Math.sin(target.rotation.z), 25 );
         // this.camera.lookAt( target.position.x - 5*Math.sin(target.rotation.z), target.position.y + 5*Math.sin(target.rotation.z), 0 );
-        this.camera.position.set( target.position.x, target.position.y, 25 );
+        // this.camera.position.set( target.position.x, target.position.y - 5, 25 );
+        this.camera.position.set( target.position.x, target.position.y - 8, 12 );
         this.camera.lookAt( target.position.x, target.position.y, 0 );
     }
 
@@ -96,7 +111,7 @@ export default class Game {
         const deltaTime = time - this.time;
         this.time = time;
 
-        this.player.update(deltaTime, this.level.meshList, this.arrayEnemy);
+        this.player.update(deltaTime);
         this.cameraFollowTarget(this.player.mesh);
 
         // if(Math.random() <= 0.01) { console.log('spawnEnemy'); this.spawnEnemy(); }
@@ -117,7 +132,7 @@ export default class Game {
             }
         });
 
-        this.ui.update(this);
+        // this.ui.update(this);
         this.renderer.render( this.scene, this.camera );
         requestAnimationFrame((time) => this.run(time));
     }

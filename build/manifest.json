@@ -7,9 +7,19 @@
   "assets/images/ground0004.jpg": "/./assets/images/ground0004.jpg",
   "assets/images/wall0008.jpg": "/./assets/images/wall0008.jpg",
   "assets/models/character.fbx": "/./assets/models/character.fbx",
+  "assets/models/character@death-nogun.fbx": "/./assets/models/character@death-nogun.fbx",
   "assets/models/character@death-rifle.fbx": "/./assets/models/character@death-rifle.fbx",
-  "assets/models/character@idle-reload-rifle.fbx": "/./assets/models/character@idle-reload-rifle.fbx",
-  "assets/models/character@idle-rifle.fbx": "/./assets/models/character@idle-rifle.fbx",
-  "assets/models/character@run-backwards-rifle.fbx": "/./assets/models/character@run-backwards-rifle.fbx",
-  "assets/models/character@run-forwards-rifle.fbx": "/./assets/models/character@run-forwards-rifle.fbx"
+  "assets/models/character@idle-nogun-run-backwards.fbx": "/./assets/models/character@idle-nogun-run-backwards.fbx",
+  "assets/models/character@idle-nogun-run-forwards.fbx": "/./assets/models/character@idle-nogun-run-forwards.fbx",
+  "assets/models/character@idle-nogun-stay.fbx": "/./assets/models/character@idle-nogun-stay.fbx",
+  "assets/models/character@idle-rifle-run-backwards.fbx": "/./assets/models/character@idle-rifle-run-backwards.fbx",
+  "assets/models/character@idle-rifle-run-forwards.fbx": "/./assets/models/character@idle-rifle-run-forwards.fbx",
+  "assets/models/character@idle-rifle-stay.fbx": "/./assets/models/character@idle-rifle-stay.fbx",
+  "assets/models/character@reload-rifle-run-backwards.fbx": "/./assets/models/character@reload-rifle-run-backwards.fbx",
+  "assets/models/character@reload-rifle-run-forwards.fbx": "/./assets/models/character@reload-rifle-run-forwards.fbx",
+  "assets/models/character@reload-rifle-stay.fbx": "/./assets/models/character@reload-rifle-stay.fbx",
+  "assets/models/character@shoot-rifle-run-backwards.fbx": "/./assets/models/character@shoot-rifle-run-backwards.fbx",
+  "assets/models/character@shoot-rifle-run-forwards.fbx": "/./assets/models/character@shoot-rifle-run-forwards.fbx",
+  "assets/models/character@shoot-rifle-stay.fbx": "/./assets/models/character@shoot-rifle-stay.fbx",
+  "assets/models/player.fbx": "/./assets/models/player.fbx"
 }
