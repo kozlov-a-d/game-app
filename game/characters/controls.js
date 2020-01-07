@@ -58,7 +58,12 @@ export default class Controls {
         this.coord.mouse.y = event.clientY - window.innerHeight/2;
         // let mX = this.coord.mouse.x - 0;
         // let mY = this.coord.mouse.y - 0;
-        this.direction = (Math.atan2(this.coord.mouse.x, this.coord.mouse.y) + Math.PI) * -1;
+        this.direction = (Math.atan2(this.coord.mouse.x, this.coord.mouse.y) + Math.PI);
+        // this.direction = (Math.atan2(this.coord.mouse.x, this.coord.mouse.y));
         // console.log(Math.atan2(this.coord.mouse.x, this.coord.mouse.y) / (Math.PI / 180));
+
+        // console.log('== ', this.coord.mouse, ' ==');
+        // console.log('== ' + Math.atan2(this.coord.mouse.x, this.coord.mouse.y) / (Math.PI / 180) + ' ==');
+        // console.log('== == == == == == == ==');
     }
 }

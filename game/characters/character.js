@@ -11,8 +11,8 @@ export default class Character {
         this.states = {
             actions: {
                 idle: false,
-                shoot: false,
-                reload: false,
+                // shoot: false,
+                // reload: false,
                 death: false
             },
             movement: {
@@ -22,7 +22,13 @@ export default class Character {
             },
             direction: {
                 forwards: false,
-                backwards: false
+                'forwards-right': false,
+                'forwards-left': false,
+                backwards: false,
+                'backwards-right': false,
+                'backwards-left': false,
+                right: false,
+                left: false,
             },
             weapons: {
                 nogun: false,
@@ -83,7 +89,7 @@ export default class Character {
         // + "idle-rifle-run-backwards"
         // + "idle-rifle-run-forwards"
         // + "idle-rifle-stay"
-        // - "reload-rifle-run-backwards"  костыль из "reload-rifle-stay"
+        // - "reload-rifle-run-backwards" костыль из "reload-rifle-stay"
         // - "reload-rifle-run-forwards"  костыль из "reload-rifle-stay"
         // + "reload-rifle-stay"
         // - "shoot-rifle-run-backwards"  костыль из "shoot-rifle-run-forwards"
@@ -143,7 +149,10 @@ export default class Character {
         };
         // console.log(animationsNameList.sort());
         animationsNameList.forEach((animationName) => {
-            animationsList[animationName] = this.mixer.clipAction(this.assets.animations[animationName].animations[0]);
+            console.log(animationName);
+            if(this.assets.animations[animationName]) {
+                animationsList[animationName] = this.mixer.clipAction(this.assets.animations[animationName].animations[0]);
+            }
         });
         return animationsList;
     }
@@ -153,6 +162,8 @@ export default class Character {
         const geometry = new THREE.CylinderGeometry( 0.5, 0.5, 2, 12 ); 
         // const material = new THREE.MeshLambertMaterial( { color: 0x00ff00, side: THREE.BackSide } );
         const material = new THREE.MeshBasicMaterial( { color: 0x00ff00, wireframe: true } );
+        material.transparent = true;
+        material.opacity = 0.0;
         collaider = new THREE.Mesh( geometry, material );
         collaider.name = `${this.name} collaider`;
         collaider.rotateX(Math.PI/2);
@@ -207,7 +218,13 @@ export default class Character {
         
         // direction
         if (this.states.direction.forwards) { direction = '-forwards'; } 
+        if (this.states.direction['forwards-right']) { direction = '-forwards-right'; } 
+        if (this.states.direction['forwards-left']) { direction = '-forwards-left'; } 
+        if (this.states.direction.right) { direction = '-right'; } 
         if (this.states.direction.backwards) { direction = '-backwards'; } 
+        if (this.states.direction['backwards-left']) { direction = '-backwards-left'; } 
+        if (this.states.direction['backwards-tight']) { direction = '-backwards-right'; } 
+        if (this.states.direction.left) { direction = '-left'; } 
 
         // movement
         if (this.states.movement.stay) { 
@@ -223,11 +240,14 @@ export default class Character {
             direction = '';
         }
         if (this.states.actions.idle) { actions = '-idle'; } 
-        if (this.states.actions.reload) { actions = '-reload'; } 
-        if (this.states.actions.shoot) { actions = '-shoot'; } 
+        // if (this.states.actions.reload) { actions = '-reload'; } 
+        if (this.states.actions.reload) { actions = '-idle'; } 
+        // if (this.states.actions.shoot) { actions = '-shoot'; } 
+        if (this.states.actions.shoot) { actions = '-idle'; } 
 
         // weapon
-        if (this.states.weapons.nogun) { weapon = '-nogun'; } 
+        // if (this.states.weapons.nogun) { weapon = '-nogun'; } 
+        if (this.states.weapons.nogun) { weapon = '-rifle'; } 
         if (this.states.weapons.rifle) { weapon = '-rifle'; } 
         
         let nextAnimation = `${animations}${actions}${weapon}${movement}${direction}`;

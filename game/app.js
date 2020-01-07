@@ -95,7 +95,8 @@ export default class Game {
         // this.camera.position.set( target.position.x - 5*Math.sin(target.rotation.z), target.position.y + 5*Math.sin(target.rotation.z), 25 );
         // this.camera.lookAt( target.position.x - 5*Math.sin(target.rotation.z), target.position.y + 5*Math.sin(target.rotation.z), 0 );
         // this.camera.position.set( target.position.x, target.position.y - 5, 25 );
-        this.camera.position.set( target.position.x, target.position.y - 8, 12 );
+        // this.camera.position.set( target.position.x, target.position.y - 8, 12 );
+        this.camera.position.set( target.position.x, target.position.y, 12 );
         this.camera.lookAt( target.position.x, target.position.y, 0 );
     }
 

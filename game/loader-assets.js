@@ -19,51 +19,33 @@ class LoaderAssets {
 
         // [model]-[animation]-[weapons]
         
-        // + "death-nogun"
-        // + "death-rifle"
 
-        // + "idle-nogun-run-backwards"
-        // + "idle-nogun-run-forwards"
-        // + "idle-nogun-stay"
-
-        // + "idle-rifle-run-backwards"
-        // + "idle-rifle-run-forwards"
-        // + "idle-rifle-stay"
-
-        // - "reload-rifle-run-backwards"  костыль из "reload-rifle-stay"
-        // - "reload-rifle-run-forwards"  костыль из "reload-rifle-stay"
-        // + "reload-rifle-stay"
-
-        // - "shoot-rifle-run-backwards"  костыль из "shoot-rifle-run-forwards"
-        // + "shoot-rifle-run-forwards"
-        // + "shoot-rifle-stay" 
-
-        {
-            type: 'animation',
-            name: 'character-death-nogun',
-            url: 'build/assets/models/character@death-nogun.fbx',            
-        },
+        // {
+        //     type: 'animation',
+        //     name: 'character-death-nogun',
+        //     url: 'build/assets/models/character@death-nogun.fbx',            
+        // },
         {
             type: 'animation',
             name: 'character-death-rifle',
             url: 'build/assets/models/character@death-rifle.fbx',            
         },
 
-        {
-            type: 'animation',
-            name: 'character-idle-nogun-run-backwards',
-            url: 'build/assets/models/character@idle-nogun-run-backwards.fbx',            
-        },
-        {
-            type: 'animation',
-            name: 'character-idle-nogun-run-forwards',
-            url: 'build/assets/models/character@idle-nogun-run-forwards.fbx',            
-        },
-        {
-            type: 'animation',
-            name: 'character-idle-nogun-stay',
-            url: 'build/assets/models/character@idle-nogun-stay.fbx',            
-        },
+        // {
+        //     type: 'animation',
+        //     name: 'character-idle-nogun-run-backwards',
+        //     url: 'build/assets/models/character@idle-nogun-run-backwards.fbx',            
+        // },
+        // {
+        //     type: 'animation',
+        //     name: 'character-idle-nogun-run-forwards',
+        //     url: 'build/assets/models/character@idle-nogun-run-forwards.fbx',            
+        // },
+        // {
+        //     type: 'animation',
+        //     name: 'character-idle-nogun-stay',
+        //     url: 'build/assets/models/character@idle-nogun-stay.fbx',            
+        // },
 
         {
             type: 'animation',
@@ -72,8 +54,38 @@ class LoaderAssets {
         },
         {
             type: 'animation',
+            name: 'character-idle-rifle-run-backwards-left',
+            url: 'build/assets/models/character@idle-rifle-run-backwards-left.fbx',            
+        },
+        {
+            type: 'animation',
+            name: 'character-idle-rifle-run-backwards-right',
+            url: 'build/assets/models/character@idle-rifle-run-backwards-right.fbx',            
+        },
+        {
+            type: 'animation',
             name: 'character-idle-rifle-run-forwards',
             url: 'build/assets/models/character@idle-rifle-run-forwards.fbx',            
+        },
+        {
+            type: 'animation',
+            name: 'character-idle-rifle-run-forwards-left',
+            url: 'build/assets/models/character@idle-rifle-run-forwards-left.fbx',            
+        },
+        {
+            type: 'animation',
+            name: 'character-idle-rifle-run-forwards-right',
+            url: 'build/assets/models/character@idle-rifle-run-forwards-right.fbx',            
+        },
+        {
+            type: 'animation',
+            name: 'character-idle-rifle-run-left',
+            url: 'build/assets/models/character@idle-rifle-run-left.fbx',            
+        },
+        {
+            type: 'animation',
+            name: 'character-idle-rifle-run-right',
+            url: 'build/assets/models/character@idle-rifle-run-right.fbx',            
         },
         {
             type: 'animation',
@@ -82,37 +94,67 @@ class LoaderAssets {
         },
 
 
-        {
-            type: 'animation',
-            name: 'character-reload-rifle-run-backwards',
-            url: 'build/assets/models/character@reload-rifle-run-backwards.fbx',            
-        },
-        {
-            type: 'animation',
-            name: 'character-reload-rifle-run-forwards',
-            url: 'build/assets/models/character@reload-rifle-run-forwards.fbx',            
-        },
-        {
-            type: 'animation',
-            name: 'character-reload-rifle-stay',
-            url: 'build/assets/models/character@reload-rifle-stay.fbx',            
-        },
+        // {
+        //     type: 'animation',
+        //     name: 'character-reload-rifle-run-backwards',
+        //     url: 'build/assets/models/character@reload-rifle-run-backwards.fbx',            
+        // },
+        // {
+        //     type: 'animation',
+        //     name: 'character-reload-rifle-run-forwards',
+        //     url: 'build/assets/models/character@reload-rifle-run-forwards.fbx',            
+        // },
+        // {
+        //     type: 'animation',
+        //     name: 'character-reload-rifle-stay',
+        //     url: 'build/assets/models/character@reload-rifle-stay.fbx',            
+        // },
 
-        {
-            type: 'animation',
-            name: 'character-shoot-rifle-run-backwards',
-            url: 'build/assets/models/character@shoot-rifle-run-backwards.fbx',            
-        },
-        {
-            type: 'animation',
-            name: 'character-shoot-rifle-run-forwards',
-            url: 'build/assets/models/character@shoot-rifle-run-forwards.fbx',            
-        },
-        {
-            type: 'animation',
-            name: 'character-shoot-rifle-stay',
-            url: 'build/assets/models/character@shoot-rifle-stay.fbx',            
-        },
+        // {
+        //     type: 'animation',
+        //     name: 'character-shoot-rifle-run-backwards',
+        //     url: 'build/assets/models/character@shoot-rifle-run-backwards.fbx',            
+        // },
+        // {
+        //     type: 'animation',
+        //     name: 'character-shoot-rifle-run-forwards',
+        //     url: 'build/assets/models/character@shoot-rifle-run-forwards.fbx',            
+        // },
+        // {
+        //     type: 'animation',
+        //     name: 'character-shoot-rifle-run-right',
+        //     url: 'build/assets/models/character@shoot-rifle-run-right.fbx',            
+        // },
+        // {
+        //     type: 'animation',
+        //     name: 'character-shoot-rifle-run-left',
+        //     url: 'build/assets/models/character@shoot-rifle-run-left.fbx',            
+        // },
+        // {
+        //     type: 'animation',
+        //     name: 'character-shoot-rifle-run-backwards-right',
+        //     url: 'build/assets/models/character@shoot-rifle-run-backwards-right.fbx',            
+        // },
+        // {
+        //     type: 'animation',
+        //     name: 'character-shoot-rifle-run-forwards-right',
+        //     url: 'build/assets/models/character@shoot-rifle-run-forwards-right.fbx',            
+        // },
+        // {
+        //     type: 'animation',
+        //     name: 'character-shoot-rifle-run-backwards-left',
+        //     url: 'build/assets/models/character@shoot-rifle-run-backwards-left.fbx',            
+        // },
+        // {
+        //     type: 'animation',
+        //     name: 'character-shoot-rifle-run-forwards-left',
+        //     url: 'build/assets/models/character@shoot-rifle-run-forwards-left.fbx',            
+        // },
+        // {
+        //     type: 'animation',
+        //     name: 'character-shoot-rifle-stay',
+        //     url: 'build/assets/models/character@shoot-rifle-stay.fbx',            
+        // },
         
         ];
         this.resourcesLoaded = {
