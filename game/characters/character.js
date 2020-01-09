@@ -154,6 +154,10 @@ export default class Character {
             console.log(animationName);
             if(this.assets.animations[animationName]) {
                 animationsList[animationName] = this.mixer.clipAction(this.assets.animations[animationName].animations[0]);
+                animationsList[animationName].play();
+                animationsList[animationName].enabled = true;
+                animationsList[animationName].setEffectiveTimeScale( 1 );
+                animationsList[animationName].setEffectiveWeight( 0 );
                 animationsList[animationName].name = animationName;
             }
         });
@@ -245,51 +249,38 @@ export default class Character {
         // let self = this;
         // const totalSteps = 10;
 
-        // function crossFadeAnimationAction(actionToFadeOut, actionToFadeIn, duration) {
-        //     // actionToFadeIn.setEffectiveWeight(weightOfActionToFadeOut);
-        //     actionToFadeIn.setEffectiveTimeScale(1);
-        //     actionToFadeIn.enabled = true;
-        //     actionToFadeIn.time = 0;
-        //     actionToFadeIn.crossFadeFrom(actionToFadeOut, duration);
-            
-        //     step = 0;
-        //     clearInterval(timerId);
-        //     timerId = setInterval(() => {
-        //         step++;
-        //         actionToFadeIn.setEffectiveWeight(1 / totalSteps * step);
-        //         if (step === totalSteps) {
-        //             self.animationCurrent = self.animations[nextAnimation];
-        //             self.animationCurrent.play();
-        //             clearInterval(timerId);
-        //         }
-        //     }, duration * 1000 / totalSteps);
-        // }
+        function setWeight( action, weight ) {
+            action.enabled = true;
+            action.setEffectiveTimeScale( 1 );
+            action.setEffectiveWeight( weight );
+        }
+
+        function crossFade( startAction, endAction, duration ) {
+            let timerId;
+            let step = 0;
+            let totalSteps = 10;
+
+            step = 0;
+            clearInterval(timerId);
+            timerId = setInterval(() => {
+                step++;
+                setWeight(startAction, 1 - step/totalSteps);
+                setWeight(endAction, step/totalSteps);
+                if (step >= totalSteps) {
+                    clearInterval(timerId);
+                }
+            }, duration * 1000 / totalSteps);
+        }
         
 
         if (this.animations[nextAnimation]) {
-            // this.animateStop();
-
             if (this.animationCurrent == null) {
                 this.animationCurrent = nextAnimation;
-                this.animations[this.animationCurrent].play();
-                console.log(this.animations[this.animationCurrent].name);
+                setWeight( this.animations[this.animationCurrent], 1 )
             } else {
-                // crossFadeAnimationAction(this.animationCurrent, this.animations[nextAnimation], 0.2);
-
-                // this.animations[nextAnimation].setEffectiveTimeScale(1);
-                // this.animations[nextAnimation].enabled = true;
-                // this.animations[nextAnimation].time = 0;
-                // this.animations[nextAnimation].crossFadeFrom(this.animations[this.animationCurrent], 0.2);
-                // this.animations[nextAnimation].setEffectiveWeight(1/2);
-                // this.animationCurrent = nextAnimation;
-                // console.log(this.animations[this.animationCurrent].name);
-
-                this.animations[nextAnimation].play();
-                this.animations[this.animationCurrent].stop();
+                crossFade( this.animations[this.animationCurrent], this.animations[nextAnimation], 0.2 );
                 this.animationCurrent = nextAnimation;
             }
-            // this.animations[nextAnimation].play();
-
             // console.log(`Active animation is ${nextAnimation}`);
         } else {
             console.error(`Animation not found ${nextAnimation}`);
