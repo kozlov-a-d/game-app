@@ -22,23 +22,17 @@ export default class Player extends Character {
             x: this.collaider.position.x,
             y: this.collaider.position.y,
         };
-        // this.mesh.rotation.y = this.controls.direction * -1;
-        // this.mesh.rotation.y = Math.PI * 2 - this.controls.direction;
+
         this.mesh.rotation.y = Math.PI * 2 - this.controls.direction;
         if (this.controls.states.up) { this.collaider.position.y += distance; }
         if (this.controls.states.down) { this.collaider.position.y -= distance; }
         if (this.controls.states.left) { this.collaider.position.x -= distance; }
         if (this.controls.states.right) { this.collaider.position.x += distance; }
-        // const newPosition = {
-        //     x: this.collaider.position.x,
-        //     y: this.collaider.position.y,
-        // };
 
         const newPosition = {
             x: this.collaider.position.x - currentPosition.x,
             y: this.collaider.position.y - currentPosition.y,
         };
-        
 
         if ( this.controls.states.up || this.controls.states.down || this.controls.states.left || this.controls.states.right) {
             if (!this.states.movement.run) {
@@ -76,6 +70,5 @@ export default class Player extends Character {
                 this.activateState('movement', 'stay');
             }
         }
-        
     }
 }

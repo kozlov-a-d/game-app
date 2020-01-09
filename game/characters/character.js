@@ -3,9 +3,7 @@ import Assets from '../loader-assets';
 
 export default class Character {
     constructor(name, model = 'character', animations = 'character') {
-        // this.assets = new LoaderAssets().getAssets();
         this.assets = Assets.getAssets();
-        console.log('Character.js resources', this.assets);
         this.name = name;
         this.animationsScope = animations;
         this.states = {
@@ -49,7 +47,6 @@ export default class Character {
         this.activateState('weapons', 'nogun');
 
         this.mixer.update( 0 );
-        console.log(this.mixer);
     }
 
     appendToScene(scene) {
@@ -167,7 +164,6 @@ export default class Character {
     createCollaider() {
         let collaider;
         const geometry = new THREE.CylinderGeometry( 0.5, 0.5, 2, 12 ); 
-        // const material = new THREE.MeshLambertMaterial( { color: 0x00ff00, side: THREE.BackSide } );
         const material = new THREE.MeshBasicMaterial( { color: 0x00ff00, wireframe: true } );
         material.transparent = true;
         material.opacity = 0.0;
@@ -191,7 +187,6 @@ export default class Character {
     }
 
     onStateChange() {
-        // console.log(this.states);
         this.animateSwitch();
     }
 
@@ -243,11 +238,6 @@ export default class Character {
         if (this.states.weapons.rifle) { weapon = '-rifle'; } 
         
         let nextAnimation = `${animations}${actions}${weapon}${movement}${direction}`;
-
-        // let timerId;
-        // let step;
-        // let self = this;
-        // const totalSteps = 10;
 
         function setWeight( action, weight ) {
             action.enabled = true;
@@ -303,7 +293,6 @@ export default class Character {
     }
 
     update(deltaTime) {
-        // console.log(deltaTime);
         if (this.mesh) {
             this.mesh.position.x = this.collaider.position.x;
             this.mesh.position.y = this.collaider.position.y;
