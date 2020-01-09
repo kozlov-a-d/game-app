@@ -37,6 +37,7 @@ export default class Character {
             },
         };
         this.mixer;
+        this.animationCurrent = null;
 
         this.mesh = this.createMesh(model);
         this.animations = this.createAnimations(this.animationsScope);
@@ -98,6 +99,7 @@ export default class Character {
 
         let animationsList = {};
         let animationsNameList = [];
+        
         for (let movement in this.states.movement) {
             // стоя на месте мне не нужны направления
             if (movement !== 'stay') {
@@ -152,6 +154,7 @@ export default class Character {
             console.log(animationName);
             if(this.assets.animations[animationName]) {
                 animationsList[animationName] = this.mixer.clipAction(this.assets.animations[animationName].animations[0]);
+                animationsList[animationName].name = animationName;
             }
         });
         return animationsList;
@@ -200,21 +203,6 @@ export default class Character {
         let weapon = '';
         let movement = '';
         let direction = '-forwards';
-
-        // + "death-nogun"
-        // + "death-rifle"
-        // + "idle-nogun-run-backwards"
-        // + "idle-nogun-run-forwards"
-        // + "idle-nogun-stay"
-        // + "idle-rifle-run-backwards"
-        // + "idle-rifle-run-forwards"
-        // + "idle-rifle-stay"
-        // - "reload-rifle-run-backwards"  костыль из "reload-rifle-stay"
-        // - "reload-rifle-run-forwards"  костыль из "reload-rifle-stay"
-        // + "reload-rifle-stay"
-        // - "shoot-rifle-run-backwards"  костыль из "shoot-rifle-run-forwards"
-        // + "shoot-rifle-run-forwards"
-        // + "shoot-rifle-stay" 
         
         // direction
         if (this.states.direction.forwards) { direction = '-forwards'; } 
@@ -223,7 +211,7 @@ export default class Character {
         if (this.states.direction.right) { direction = '-right'; } 
         if (this.states.direction.backwards) { direction = '-backwards'; } 
         if (this.states.direction['backwards-left']) { direction = '-backwards-left'; } 
-        if (this.states.direction['backwards-tight']) { direction = '-backwards-right'; } 
+        if (this.states.direction['backwards-right']) { direction = '-backwards-right'; } 
         if (this.states.direction.left) { direction = '-left'; } 
 
         // movement
@@ -252,10 +240,57 @@ export default class Character {
         
         let nextAnimation = `${animations}${actions}${weapon}${movement}${direction}`;
 
+        // let timerId;
+        // let step;
+        // let self = this;
+        // const totalSteps = 10;
+
+        // function crossFadeAnimationAction(actionToFadeOut, actionToFadeIn, duration) {
+        //     // actionToFadeIn.setEffectiveWeight(weightOfActionToFadeOut);
+        //     actionToFadeIn.setEffectiveTimeScale(1);
+        //     actionToFadeIn.enabled = true;
+        //     actionToFadeIn.time = 0;
+        //     actionToFadeIn.crossFadeFrom(actionToFadeOut, duration);
+            
+        //     step = 0;
+        //     clearInterval(timerId);
+        //     timerId = setInterval(() => {
+        //         step++;
+        //         actionToFadeIn.setEffectiveWeight(1 / totalSteps * step);
+        //         if (step === totalSteps) {
+        //             self.animationCurrent = self.animations[nextAnimation];
+        //             self.animationCurrent.play();
+        //             clearInterval(timerId);
+        //         }
+        //     }, duration * 1000 / totalSteps);
+        // }
+        
+
         if (this.animations[nextAnimation]) {
-            this.animateStop();
-            this.animations[nextAnimation].play();
-            console.log(`Active animation is ${nextAnimation}`);
+            // this.animateStop();
+
+            if (this.animationCurrent == null) {
+                this.animationCurrent = nextAnimation;
+                this.animations[this.animationCurrent].play();
+                console.log(this.animations[this.animationCurrent].name);
+            } else {
+                // crossFadeAnimationAction(this.animationCurrent, this.animations[nextAnimation], 0.2);
+
+                // this.animations[nextAnimation].setEffectiveTimeScale(1);
+                // this.animations[nextAnimation].enabled = true;
+                // this.animations[nextAnimation].time = 0;
+                // this.animations[nextAnimation].crossFadeFrom(this.animations[this.animationCurrent], 0.2);
+                // this.animations[nextAnimation].setEffectiveWeight(1/2);
+                // this.animationCurrent = nextAnimation;
+                // console.log(this.animations[this.animationCurrent].name);
+
+                this.animations[nextAnimation].play();
+                this.animations[this.animationCurrent].stop();
+                this.animationCurrent = nextAnimation;
+            }
+            // this.animations[nextAnimation].play();
+
+            // console.log(`Active animation is ${nextAnimation}`);
         } else {
             console.error(`Animation not found ${nextAnimation}`);
         }

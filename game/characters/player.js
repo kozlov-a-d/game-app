@@ -42,7 +42,7 @@ export default class Player extends Character {
 
         if ( this.controls.states.up || this.controls.states.down || this.controls.states.left || this.controls.states.right) {
             if (!this.states.movement.run) {
-                console.log('movement.run');
+                // console.log('movement.run');
                 this.activateState('movement', 'run');
                 this.activateState('direction', 'forwards');
                 
@@ -53,14 +53,16 @@ export default class Player extends Character {
                 let direction = 'forwards';
 
                 let deltaDirection = Math.abs(meshDirection - moveDirection);
+                console.log(deltaDirection);
                 // TODO: чё-то тут не так с направлениями при разных углах
-                if (22.5 <= deltaDirection && deltaDirection <= 67.5) { direction = 'forwards-right'; }
-                if (67.5 <= deltaDirection && deltaDirection <= 112.5) { direction = 'left'; }
-                if (112.5 <= deltaDirection && deltaDirection <= 157.5) { direction = 'backwards-left'; }
-                if (157.5 <= deltaDirection && deltaDirection <= 202.5) { direction = 'backwards'; }
-                if (202.5 <= deltaDirection && deltaDirection <= 247.5) { direction = 'backwards-right'; }
-                if (247.5 <= deltaDirection && deltaDirection <= 292.5) { direction = 'right'; }
-                if (292.5 <= deltaDirection && deltaDirection <= 337.5) { direction = 'forwards-left'; }
+                // для вперед и назад сузим углы
+                if (22.5 <= deltaDirection && deltaDirection <= 67.5) { direction = 'forwards-right';  console.log(direction); }
+                if (67.5 <= deltaDirection && deltaDirection <= 112.5) { direction = 'right';  console.log(direction); }
+                if (112.5 <= deltaDirection && deltaDirection <= 157.5) { direction = 'backwards-right'; console.log(direction); }
+                if (157.5 <= deltaDirection && deltaDirection <= 202.5) { direction = 'backwards'; console.log(direction); }
+                if (202.5 <= deltaDirection && deltaDirection <= 247.5) { direction = 'backwards-left'; console.log(direction); }
+                if (247.5 <= deltaDirection && deltaDirection <= 292.5) { direction = 'left'; console.log(direction); }
+                if (292.5 <= deltaDirection && deltaDirection <= 337.5) { direction = 'forwards-left'; console.log(direction); }
 
                 if (!this.states.direction[direction]){
                     this.activateState('direction', direction);
@@ -70,7 +72,7 @@ export default class Player extends Character {
             }
         } else {
             if (!this.states.movement.stay) {
-                console.log('movement.stay');
+                // console.log('movement.stay');
                 this.activateState('movement', 'stay');
             }
         }
