@@ -11,7 +11,6 @@ export default class Game {
     constructor(rootElement){
         // new LoaderAssets((resources) => {
         Assets.onLoad((resources) => {
-            console.log('App.js resources', resources);
             this.time = 0;
             
             this.scene = new THREE.Scene();
@@ -19,7 +18,6 @@ export default class Game {
             this.camera = this.initCamera();
 
             this.audioManager = new AudioManager(this.camera);
-            
 
             this.container = rootElement ? rootElement : document.querySelector('body');
             this.container.appendChild(this.renderer.domElement);
@@ -42,8 +40,6 @@ export default class Game {
 
             this.spawnEnemy(23, 23);
             this.spawnEnemy(26, 26);
-
-            // this.ui = new UI();
 
             this.run();
         });
@@ -83,8 +79,8 @@ export default class Game {
      * @param {THREE.Mesh} target 
      */
     cameraFollowTarget(target) {
-        this.camera.position.set( target.position.x, target.position.y - 5, 25 );
-        this.camera.position.set( target.position.x, target.position.y - 8, 12 );
+        this.camera.position.set( target.position.x, target.position.y - 5, 15 );
+        this.camera.lookAt( target.position.x, target.position.y, target.position.z );
     }
 
     spawnEnemy(posX, posY) {
@@ -118,10 +114,10 @@ export default class Game {
             }
         });
 
-        // this.ui.update(this);
         this.renderer.render( this.scene, this.camera );
         requestAnimationFrame((time) => this.run(time));
     }
 }
 
+console.log('asdad'); 
 new Game(document.getElementById('game'));
