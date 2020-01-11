@@ -8,7 +8,7 @@
         "esModuleInterop": true
     },
     "include": [
-        "./src/**/*"
+        "./src/**/*", "test/player.unit.test.js"
     ],
     "exclude": [
         "node_modules",

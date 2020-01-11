@@ -44,19 +44,7 @@ export default class Player extends Character {
             if (this.states.movement.run) {
                 const meshDirection =  this.mesh.rotation.y / (Math.PI / 180);
                 const moveDirection = (Math.atan2(-1*newPosition.x, -1*newPosition.y) + Math.PI) / (Math.PI / 180);
-                let direction = 'forwards';
-
-                let deltaDirection = Math.abs(meshDirection - moveDirection);
-                console.log(deltaDirection);
-                // TODO: чё-то тут не так с направлениями при разных углах
-                // для вперед и назад сузим углы
-                if (22.5 <= deltaDirection && deltaDirection <= 67.5) { direction = 'forwards-right';  console.log(direction); }
-                if (67.5 <= deltaDirection && deltaDirection <= 112.5) { direction = 'right';  console.log(direction); }
-                if (112.5 <= deltaDirection && deltaDirection <= 157.5) { direction = 'backwards-right'; console.log(direction); }
-                if (157.5 <= deltaDirection && deltaDirection <= 202.5) { direction = 'backwards'; console.log(direction); }
-                if (202.5 <= deltaDirection && deltaDirection <= 247.5) { direction = 'backwards-left'; console.log(direction); }
-                if (247.5 <= deltaDirection && deltaDirection <= 292.5) { direction = 'left'; console.log(direction); }
-                if (292.5 <= deltaDirection && deltaDirection <= 337.5) { direction = 'forwards-left'; console.log(direction); }
+                let direction = this.calcDirectionByAngleDifference(meshDirection, moveDirection);
 
                 if (!this.states.direction[direction]){
                     this.activateState('direction', direction);
@@ -70,5 +58,22 @@ export default class Player extends Character {
                 this.activateState('movement', 'stay');
             }
         }
+    }
+
+
+    calcDirectionByAngleDifference(meshDirection, moveDirection) {
+        let direction = 'forwards';
+
+        let deltaDirection = Math.abs(meshDirection - moveDirection);
+
+        if (22.5 <= deltaDirection && deltaDirection <= 67.5) { direction = 'forwards-right'; }
+        if (67.5 <= deltaDirection && deltaDirection <= 112.5) { direction = 'right'; }
+        if (112.5 <= deltaDirection && deltaDirection <= 157.5) { direction = 'backwards-right'; }
+        if (157.5 <= deltaDirection && deltaDirection <= 202.5) { direction = 'backwards'; }
+        if (202.5 <= deltaDirection && deltaDirection <= 247.5) { direction = 'backwards-left'; }
+        if (247.5 <= deltaDirection && deltaDirection <= 292.5) { direction = 'left'; }
+        if (292.5 <= deltaDirection && deltaDirection <= 337.5) { direction = 'forwards-left'; }
+
+        return direction;
     }
 }
