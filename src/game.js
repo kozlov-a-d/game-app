@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-// import LoaderAssets from './loader-assets';
+
 import Assets from './loader-assets';
 import Level from './level';
 import Player from './characters/player';
@@ -7,12 +7,16 @@ import Enemy from './enemy';
 import AudioManager from './audio-manager';
 import UI from './ui';
 
+
+
+/**
+ * @template {{}} GameType
+ */
 export default class Game {
     constructor(rootElement){
         // new LoaderAssets((resources) => {
         Assets.onLoad((resources) => {
             this.time = 0;
-            
             this.scene = new THREE.Scene();
             this.renderer = this.initRenderer();
             this.camera = this.initCamera();
@@ -119,5 +123,3 @@ export default class Game {
     }
 }
 
-console.log('asdad'); 
-new Game(document.getElementById('game'));

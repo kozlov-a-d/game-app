@@ -1,9 +1,9 @@
 {
   "entrypoints": {
-    "app": {
+    "index": {
       "js": [
         "/runtime.js",
-        "/app.js"
+        "/index.js"
       ]
     }
   }

@@ -1,17 +1,17 @@
 var Encore = require('@symfony/webpack-encore');
-var path = require('path');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 Encore
     .setOutputPath('build/')
     .setPublicPath('/')
-    .addEntry('app', './game/app.js')
+    .addEntry('index', './src/index.ts')
     .enableSingleRuntimeChunk()
     .enableSassLoader()
+    .enableTypeScriptLoader()
     .copyFiles([
-        { from: './game/assets/models', to: './assets/models/[path][name].[ext]' },
-        { from: './game/assets/audio', to: './assets/audio/[path][name].[ext]' },
-        { from: './game/assets/images', to: './assets/images/[path][name].[ext]' }
+        { from: './src/assets/models', to: './assets/models/[path][name].[ext]' },
+        { from: './src/assets/audio', to: './assets/audio/[path][name].[ext]' },
+        { from: './src/assets/images', to: './assets/images/[path][name].[ext]' }
     ])
     
 ;

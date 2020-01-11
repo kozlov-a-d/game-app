@@ -1,5 +1,5 @@
 {
-  "app.js": "/app.js",
+  "index.js": "/index.js",
   "runtime.js": "/runtime.js",
   "assets/audio/weapon--beretta-m9--misfire.mp3": "/./assets/audio/weapon--beretta-m9--misfire.mp3",
   "assets/audio/weapon--beretta-m9--reload.mp3": "/./assets/audio/weapon--beretta-m9--reload.mp3",
