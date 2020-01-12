@@ -32,7 +32,8 @@ export default class Inputs {
         this.coordScreenCenter = { x: 0, y: 0 }; 
 
         this.calcCoordScreenCenter();
-        window.addEventListener('resize', this.calcCoordScreenCenter.bind(this)); 
+        window.addEventListener('resize', this.calcCoordScreenCenter.bind(this));
+        
         
         document.addEventListener('keydown', (event) => this.updateKey(event, true));
         document.addEventListener('keyup', (event) => this.updateKey(event, false));
@@ -61,12 +62,17 @@ export default class Inputs {
 
     updateMouse(event: MouseEvent): void {
         this.coordMouse.x = event.clientX - window.innerWidth/2;
-        this.coordMouse.y = event.clientY - window.innerHeight/2;
+        this.coordMouse.y = - event.clientY + window.innerHeight/2;
         this.rotation = this.calcMouseRotation(this.coordMouse.x, this.coordMouse.y);
     }
 
     calcMouseRotation(x: number, y: number): number {
-        return Math.PI * 2 - (Math.atan2(this.coordMouse.x, this.coordMouse.y) + Math.PI);
+        // console.log( Math.atan2(x, y) / (Math.PI/180));
+        console.log(  (Math.PI * 2 - (Math.atan2(x, y) + Math.PI)) / (Math.PI/180));
+
+        // console.log(Math.PI * 2 - (Math.atan2(x, y) + Math.PI));
+        return Math.atan2(y, x); 
+        // return Math.PI * 2 - (Math.atan2(x, y) + Math.PI);
     }
 
     getMouseRotation(): number {

@@ -1,4 +1,4 @@
-import { Scene, WebGLRenderer, PerspectiveCamera } from 'three';
+import { Scene, WebGLRenderer, PerspectiveCamera, AxesHelper } from 'three';
 import * as ThreeHelper from './utils/three.helper';
 import Player from './characters/player';
 import Level from './level';
@@ -29,6 +29,12 @@ export default class Game{
         this.player.body.appendToScene(this.scene);
         this.player.useCamera(this.camera);
         // this.player.setPosition(18, 18, 1.201);
+
+        let helper = new AxesHelper( 5 );
+        helper.position.x = 5;
+        helper.position.y = 5;
+        helper.position.z = 2;
+        this.scene.add( helper );
 
         // // add level
         this.level = new Level();

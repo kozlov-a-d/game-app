@@ -1,4 +1,5 @@
 import assert from 'assert';
+import 'jsdom-global/register';
 // import Player from "../src/characters/player.js";
 import Inputs from "../src/characters/inputs";
 
@@ -18,15 +19,10 @@ describe('Player', function() {
 
     describe('Player inputs', function() {
         describe('Calc mouse rotation', function() {
-            it('mesh 0', function() {
+            it('Vector2(0,1) should return 0', function() {
                 let inputs = new Inputs();
-                
-
-                assert.equal(true, true);
-            });
-            it('mesh 25', function() {
-                // let player = new Player();
-                assert.equal(true, false);
+                let result = inputs.calcMouseRotation(0,1) / (Math.PI / 180);
+                assert.equal(result, 0);
             });
         });
     });

@@ -34,9 +34,10 @@ export default class Player {
     }
 
     update(deltaTime: number): void {
+        // console.log('mesh', this.body.mesh.rotation.y);
         this.body.mesh.rotation.y = this.inputs.getMouseRotation();
         this.body.move(this.position, this.rotation);
-
+        // console.log(this.body.mesh.rotation.y);
         this.moveCamera();
     }
 }
