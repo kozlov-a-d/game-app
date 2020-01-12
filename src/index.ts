@@ -1,3 +1,4 @@
 import Game from './game';
 
-new Game(document.getElementById('game'));
+const gameNode = document.getElementById('game');
+new Game(gameNode);
