@@ -67,12 +67,9 @@ export default class Inputs {
     }
 
     calcMouseRotation(x: number, y: number): number {
-        // console.log( Math.atan2(x, y) / (Math.PI/180));
-        console.log(  (Math.PI * 2 - (Math.atan2(x, y) + Math.PI)) / (Math.PI/180));
-
         // console.log(Math.PI * 2 - (Math.atan2(x, y) + Math.PI));
-        return Math.atan2(y, x); 
-        // return Math.PI * 2 - (Math.atan2(x, y) + Math.PI);
+        // console.log(x, y);
+        return(Math.atan2(x, -y) + Math.PI); 
     }
 
     getMouseRotation(): number {

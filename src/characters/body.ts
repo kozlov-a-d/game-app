@@ -2,7 +2,7 @@ import { Mesh, Scene, BoxGeometry, MeshToonMaterial } from "three";
 
 export default class Body {
     // collider: any; // TODO:
-    mesh: Mesh;
+    public mesh: Mesh;
     // animations: any; // TODO:
     constructor() {
         // this.collider = null;
