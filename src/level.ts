@@ -1,5 +1,5 @@
 import { AmbientLight, Mesh } from 'three';
-import * as ThreeHelper from './utils/three.helper';
+import * as ThreeHelper from './utils/three-helper';
 
 export default class Level {
     lightList: Array<AmbientLight>;

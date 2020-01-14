@@ -1,6 +1,7 @@
+import * as MathHelper from '../utils/math-helper';
+
 export default class Inputs {
-    // states: {up: boolean, down: boolean, left: boolean, right: boolean, reload: boolean, fire: boolean};
-    states: any; // TODO: разобраться какого хера
+    states: { [key: string]: boolean; };
     keyMap: any;
     coordMouse: { x: number, y: number};
     coordScreenCenter: { x: number, y: number};
@@ -33,8 +34,7 @@ export default class Inputs {
 
         this.calcCoordScreenCenter();
         window.addEventListener('resize', this.calcCoordScreenCenter.bind(this));
-        
-        
+            
         document.addEventListener('keydown', (event) => this.updateKey(event, true));
         document.addEventListener('keyup', (event) => this.updateKey(event, false));
         document.addEventListener('mousemove', (event) => this.updateMouse(event));
@@ -44,39 +44,35 @@ export default class Inputs {
         });
     }
 
-    calcCoordScreenCenter(): void {
+    private calcCoordScreenCenter(): void {
         this.coordScreenCenter.x = window.innerWidth/2;
         this.coordScreenCenter.y = window.innerHeight/2;
     }
 
-    updateKey(event: KeyboardEvent, pressed: boolean): void {
+    private updateKey(event: KeyboardEvent, pressed: boolean): void {
         if(this.keyMap.has(event.keyCode)) {
             event.preventDefault();
             event.stopPropagation();
-            const stateKey = this.keyMap.get(event.keyCode);
-            if (this.states[stateKey]) {
-                this.states[stateKey] = pressed;
-            }
+            const stateKey: string = this.keyMap.get(event.keyCode);
+            this.states[stateKey] = pressed;
         }
     }
 
-    updateMouse(event: MouseEvent): void {
+    private updateMouse(event: MouseEvent): void {
         this.coordMouse.x = event.clientX - window.innerWidth/2;
         this.coordMouse.y = - event.clientY + window.innerHeight/2;
         this.rotation = this.calcMouseRotation(this.coordMouse.x, this.coordMouse.y);
     }
 
-    calcMouseRotation(x: number, y: number): number {
-        // console.log(Math.PI * 2 - (Math.atan2(x, y) + Math.PI));
-        // console.log(x, y);
-        return(Math.atan2(x, -y) + Math.PI); 
+    private calcMouseRotation(x: number, y: number): number {
+        return MathHelper.calcAngleFromAxisY({x: x, y: y}); 
     }
 
-    getMouseRotation(): number {
+    public getMouseRotation(): number {
         return this.rotation;
     }
 
-    getStates(): any {
+    public getStates(): { [key: string]: boolean; } {
         return this.states;
     }
 }

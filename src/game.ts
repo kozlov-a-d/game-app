@@ -1,5 +1,5 @@
 import { Scene, WebGLRenderer, PerspectiveCamera, AxesHelper } from 'three';
-import * as ThreeHelper from './utils/three.helper';
+import * as ThreeHelper from './utils/three-helper'; 
 import Player from './characters/player';
 import Level from './level';
 
@@ -42,10 +42,10 @@ export default class Game{
         this.level.meshList.forEach((item) => { this.scene.add(item); });
 
         ThreeHelper.onResize(this.renderer, this.camera);
-        window.addEventListener('resize', ThreeHelper.onResize.bind(this));
+        window.addEventListener('resize', () => ThreeHelper.onResize(this.renderer, this.camera));
 
         this.run();
-        console.log(this);
+        // console.log(this);
     }
 
 
