@@ -2,6 +2,8 @@ import { Scene, WebGLRenderer, PerspectiveCamera, AxesHelper } from 'three';
 import * as ThreeHelper from './utils/three-helper'; 
 import Player from './characters/player';
 import Level from './level';
+import Store from './store';
+import { resolve } from 'dns';
 
 export default class Game{
     time: number;
@@ -11,9 +13,16 @@ export default class Game{
     container: HTMLElement;
     player: Player;
     level: Level;
+    store: Store;
 
     constructor(rootNode: HTMLElement) {
         this.time = 0;
+        this.store = Store.getInstance();
+        console.log('123');
+        this.store.getResources('model', 'test').then((resolve) => {
+            console.log(resolve);
+        });
+        console.log('1234'); 
 
         // LoadScene, MainMenuScena, GameScene
         this.scene = new Scene();
@@ -54,7 +63,7 @@ export default class Game{
         this.time = time;
 
         this.player.update( deltaTime );
-        this.renderer.render( this.scene, this.camera );
+        // this.renderer.render( this.scene, this.camera );
         requestAnimationFrame((time) => this.run(time));
     }
 

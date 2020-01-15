@@ -3,6 +3,7 @@ import Body from "./body";
 import Inputs from "./inputs";
 import MoveController from "./move-controller";
 import * as MathHelper from '../utils/math-helper';
+import Store from "../store";
 
 export default class Player {
     position: {x: number, y: number, z: number};
@@ -11,15 +12,19 @@ export default class Player {
     inputs: Inputs;
     moveController: MoveController;
     camera: Camera | null;
+    store: Store;
 
     constructor() {
         this.position = { x: 4, y: 4, z: 0};
         this.rotation = { x: 0, y: 0, z: 0};
 
+        this.store = Store.getInstance();
+        
         this.body = new Body();
         this.camera = null;
         this.inputs = new Inputs();
         this.moveController = new MoveController();
+        
     }
 
     moveCamera(): void {
@@ -39,7 +44,7 @@ export default class Player {
         const moveDirection = MathHelper.calcAngleFromAxisY({x: newPosition.x - this.position.x, y: newPosition.y - this.position.y});
         // TODO: проверка направления движения персонажа относительно направления взягляда
         const moveDirectionTitle = this.moveController.calcRelativeDirectionOfMovement(this.rotation.z, moveDirection);
-        console.log(this.rotation.z, moveDirection, moveDirectionTitle);
+        // console.log(this.rotation.z, moveDirection, moveDirectionTitle);
         // TODO: вызов анимации
         // TODO: проверка колайдера 
         this.position = newPosition; 
