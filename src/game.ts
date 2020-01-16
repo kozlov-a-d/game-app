@@ -19,9 +19,9 @@ export default class Game{
         this.time = 0;
 
         this.store = Store.getInstance();
-        // this.store.getResource('src/assets/models/character.fbx', 'model').then((resolve) => {
-        //     console.log(resolve);
-        // }); 
+        this.store.getResource('src/assets/models/character.fbx', 'model').then((resolve) => {
+            console.log(resolve);
+        }); 
         // this.store.getResource('src/assets/models/character.fbx', 'model').then((resolve) => {
         //     console.log(resolve);
         // }); 
