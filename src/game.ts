@@ -22,9 +22,6 @@ export default class Game{
         this.store.getResource('src/assets/models/character.fbx', 'model').then((resolve) => {
             console.log(resolve);
         }); 
-        // this.store.getResource('src/assets/models/character.fbx', 'model').then((resolve) => {
-        //     console.log(resolve);
-        // }); 
 
         // LoadScene, MainMenuScena, GameScene
         this.scene = new Scene();
@@ -65,7 +62,7 @@ export default class Game{
         this.time = time;
 
         this.player.update( deltaTime );
-        // this.renderer.render( this.scene, this.camera );
+        this.renderer.render( this.scene, this.camera );
         requestAnimationFrame((time) => this.run(time));
     }
 

@@ -6,7 +6,7 @@ export default class MoveController {
         this.speed = 10;
     }
 
-    public getNewPosition(currentPosition: {x: number, y: number, z :number}, inputsState: { [key: string]: boolean; }, deltaTime: number): {x: number, y: number, z :number} {
+    public getNewPosition(currentPosition: {x: number, y: number, z :number}, inputsState: { [key: string]: boolean; }, angle: number, deltaTime: number): {x: number, y: number, z :number} {
         const distance = this.speed / 1000 * deltaTime;
         let newPosition = {
             x: currentPosition.x,
@@ -22,16 +22,10 @@ export default class MoveController {
         return newPosition;
     }
 
-    calcRelativeDirectionOfMovement(meshDirection:number, moveDirection:number):string {
-        let direction = 'forwards';
-        let deltaDirection = MathHelper.RadianToDegree( Math.abs(meshDirection - moveDirection) );
-        if (22.5 <= deltaDirection && deltaDirection <= 67.5) { direction = 'forwards-right'; }
-        if (67.5 <= deltaDirection && deltaDirection <= 112.5) { direction = 'right'; }
-        if (112.5 <= deltaDirection && deltaDirection <= 157.5) { direction = 'backwards-right'; }
-        if (157.5 <= deltaDirection && deltaDirection <= 202.5) { direction = 'backwards'; }
-        if (202.5 <= deltaDirection && deltaDirection <= 247.5) { direction = 'backwards-left'; }
-        if (247.5 <= deltaDirection && deltaDirection <= 292.5) { direction = 'left'; }
-        if (292.5 <= deltaDirection && deltaDirection <= 337.5) { direction = 'forwards-left'; }
+    calcRelativeDirectionOfMovement(meshDirection:number, moveDirection:number): string {
+        let deltaDirection = MathHelper.RadianToDegree( meshDirection - moveDirection );
+        const direction = MathHelper.calcRelativeDirection( deltaDirection );
+
         return direction;
     }
 

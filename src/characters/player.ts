@@ -40,14 +40,16 @@ export default class Player {
 
     update(deltaTime: number): void {
         this.rotation.z = this.inputs.getMouseRotation();
-        let newPosition = this.moveController.getNewPosition(this.position, this.inputs.getStates(), deltaTime);
-        const moveDirection = MathHelper.calcAngleFromAxisY({x: newPosition.x - this.position.x, y: newPosition.y - this.position.y});
-        // TODO: проверка направления движения персонажа относительно направления взягляда
-        const moveDirectionTitle = this.moveController.calcRelativeDirectionOfMovement(this.rotation.z, moveDirection);
-        // console.log(this.rotation.z, moveDirection, moveDirectionTitle);
-        // TODO: вызов анимации
-        // TODO: проверка колайдера 
-        this.position = newPosition; 
+
+        let inputsState = this.inputs.getStates();
+        if (inputsState.up || inputsState.down || inputsState.left || inputsState.right) {
+            let newPosition = this.moveController.getNewPosition(this.position, inputsState, this.rotation.z, deltaTime);
+            const moveDirection = MathHelper.calcAngleFromAxisY({x: newPosition.x - this.position.x, y: newPosition.y - this.position.y});
+            const moveDirectionTitle = this.moveController.calcRelativeDirectionOfMovement(this.rotation.z, moveDirection);
+            // TODO: вызов анимации
+            // TODO: проверка колайдера 
+            this.position = newPosition; 
+        }
 
         this.body.move(this.position, this.rotation);
         this.moveCamera();
