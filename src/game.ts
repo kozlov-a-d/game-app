@@ -38,12 +38,6 @@ export default class Game{
         this.player.useCamera(this.camera);
         // this.player.setPosition(18, 18, 1.201);
 
-        let helper = new AxesHelper( 5 );
-        helper.position.x = 5;
-        helper.position.y = 5;
-        helper.position.z = 2;
-        this.scene.add( helper );
-
         // // add level
         this.level = new Level();
         this.level.lightList.forEach((item) => { this.scene.add(item); });

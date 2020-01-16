@@ -1,4 +1,4 @@
-import { Camera } from "three";
+import { Camera, Mesh } from "three";
 import Body from "./body";
 import Inputs from "./inputs";
 import MoveController from "./move-controller";
@@ -9,6 +9,7 @@ export default class Player {
     position: {x: number, y: number, z: number};
     rotation: {x: number, y: number, z: number};
     body: Body;
+    collider: Mesh;
     inputs: Inputs;
     moveController: MoveController;
     camera: Camera | null;
@@ -47,7 +48,7 @@ export default class Player {
             const moveDirection = MathHelper.calcAngleFromAxisY({x: newPosition.x - this.position.x, y: newPosition.y - this.position.y});
             const moveDirectionTitle = this.moveController.calcRelativeDirectionOfMovement(this.rotation.z, moveDirection);
             // TODO: вызов анимации
-            // TODO: проверка колайдера 
+            // TODO: проверка колайдера
             this.position = newPosition; 
         }
 

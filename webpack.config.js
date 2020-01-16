@@ -16,12 +16,14 @@ Encore
     
 ;
 
-// var config;
-
 Encore.addPlugin( new BrowserSyncPlugin({
     host: 'localhost',
     port: 3000,
     server: { baseDir: ['./'] }
 }) );
 
-module.exports = Encore.getWebpackConfig();
+var config = Encore.getWebpackConfig();
+
+// config.mode = "production";
+
+module.exports = config;
