@@ -8,11 +8,12 @@ export type Resource = {
     name?: string,
     url: string,
     isLoaded: boolean,
-    content: any
+    content: any,
+    callback: any
 };
 
 interface IStore {
-    // getResources(type: ResourceType, url: string): Promise<string> 
+    getResource(type: ResourceType, url: string): Promise<Resource> 
 }
 
 export default class Store implements IStore {
@@ -32,50 +33,74 @@ export default class Store implements IStore {
         return Store.instance;
     }
 
-    private findResourcesInStoreByURL(url: string): Resource | null {
-        let resources = null;
-        this.resources.forEach((item, index) => {
-            if (item.url === url) return item;
-        });
-        return resources;
-    }
-
-    getResources(url: string, type: ResourceType): Promise<Resource> {
-        let exist = this.findResourcesInStoreByURL(url);
-        console.log(exist);
-        
+    public getResource(url: string, type: ResourceType): Promise<Resource> {
         return new Promise(resolve => {
-            if (exist !== null) {
-                resolve(exist)
+            let exist = this.findResourcesInStore(url, type);
+            let resource: Resource = null;
+
+            if (exist == null) {
+                // если ресурса нет, то добавляем его в список и начинаем загружать
+                resource = this.createResourceTemplate(url, type);
+                this.resources.push(resource);
+                resolve(this.load(resource));
+                
             } else {
-                resolve(this.load(url, type));
+                // если ресурс уже есть, то проверяем загружен ли он
+                if (exist.isLoaded) {
+                    resolve(exist); // если да, то сразу отадем загруженый ресурс
+                } else {
+                    exist.callback = () => { resolve(exist); } // если нет, то надо ждать пока другой промис его загрузит и потом отдать
+                }
             };
         })
     }
 
-    load(url: string, type: ResourceType): Promise<Resource> {
-        switch(type) {
-            case 'model': return this.loadModels(url);
-            // case 'animation': this.loadModels(item, this.FBXLoader, this.resourcesLoaded.animations);
+    private findResourcesInStore(url: string, type: ResourceType): Resource | null {
+        let resource = null;
+        this.resources.forEach((item, index) => {
+            if (item.url == url && item.type == type) {
+                resource = item;
+            }
+        });
+        return resource;
+    }
+
+    private createResourceTemplate(url: string, type: ResourceType): Resource {
+        return {
+            type: type,
+            url: url,
+            isLoaded: false,
+            content: null,
+            callback: function () {}
+        }
+    }
+
+    private load(resource: Resource): Promise<Resource> {
+        switch(resource.type) {
+            case 'model': return this.loadModel(resource);
+            case 'animation': this.loadAnimation(resource);
         }
     }   
 
-    loadModels(url: string): Promise<Resource> {
-        let resource: Resource = null;
+    private loadModel(resource: Resource): Promise<Resource> {
         return new Promise((resolve) => {
-            resource = {
-                type: 'model',
-                url: url,
-                isLoaded: false,
-                content: null
-            }
-            this.loaders.fbx.load(url, function ( object ) {
+            this.loaders.fbx.load(resource.url, ( object ) => {
                 resource.content = object;
                 resource.isLoaded = true;
                 resolve(resource); 
+                resource.callback();
             });
         });        
-       
     }
 
+    private loadAnimation(resource: Resource): Promise<Resource> {
+        return new Promise((resolve) => {
+            this.loaders.fbx.load(resource.url, ( object ) => {
+                resource.content = object;
+                resource.isLoaded = true;
+                resolve(resource); 
+                resource.callback();
+            });
+        });        
+    }
 }

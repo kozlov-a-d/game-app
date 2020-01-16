@@ -17,21 +17,14 @@ export default class Game{
 
     constructor(rootNode: HTMLElement) {
         this.time = 0;
-        this.store = Store.getInstance();
-        this.store.getResources('src/assets/models/character.fbx', 'model').then((resolve) => {
-            console.log(resolve);
-        }); 
-        this.store.getResources('src/assets/models/character.fbx', 'model').then((resolve) => {
-            console.log(resolve);
-        }); 
 
-        // this.store.loadModels('src/assets/models/character.fbx').then((resolve) => {
+        this.store = Store.getInstance();
+        // this.store.getResource('src/assets/models/character.fbx', 'model').then((resolve) => {
         //     console.log(resolve);
-        // });        
-        
-        // this.store.load('src/assets/models/character.fbx', 'model').then((resolve) => {
+        // }); 
+        // this.store.getResource('src/assets/models/character.fbx', 'model').then((resolve) => {
         //     console.log(resolve);
-        // });
+        // }); 
 
         // LoadScene, MainMenuScena, GameScene
         this.scene = new Scene();
