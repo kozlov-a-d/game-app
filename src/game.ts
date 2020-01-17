@@ -19,9 +19,6 @@ export default class Game{
         this.time = 0;
 
         this.store = Store.getInstance();
-        this.store.getResource('src/assets/models/character.fbx', 'model').then((resolve) => {
-            console.log(resolve);
-        }); 
 
         // LoadScene, MainMenuScena, GameScene
         this.scene = new Scene();
@@ -34,11 +31,8 @@ export default class Game{
 
         // add player
         this.player = new Player();
-        this.player.body.appendToScene(this.scene);
-        this.player.useCamera(this.camera);
-        // this.player.setPosition(18, 18, 1.201);
-
-        // // add level
+        
+        // add level
         this.level = new Level();
         this.level.lightList.forEach((item) => { this.scene.add(item); });
         this.level.meshList.forEach((item) => { this.scene.add(item); });
@@ -46,8 +40,9 @@ export default class Game{
         ThreeHelper.onResize(this.renderer, this.camera);
         window.addEventListener('resize', () => ThreeHelper.onResize(this.renderer, this.camera));
 
-        this.run();
-        // console.log(this);
+        this.player.init(this.scene, this.camera).then(() => {  
+            this.run();
+        });
     }
 
 
@@ -56,7 +51,7 @@ export default class Game{
         this.time = time;
 
         this.player.update( deltaTime );
-        this.renderer.render( this.scene, this.camera );
+        // this.renderer.render( this.scene, this.camera );
         requestAnimationFrame((time) => this.run(time));
     }
 

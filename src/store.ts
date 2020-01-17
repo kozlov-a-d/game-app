@@ -1,4 +1,5 @@
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
+import { Group } from 'three';
 
 export type ResourceType = 'model' | 'animation' | 'texture';
 
@@ -8,7 +9,7 @@ export type Resource = {
     name?: string,
     url: string,
     isLoaded: boolean,
-    content: any,
+    content: Group,
     callback: any
 };
 

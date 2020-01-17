@@ -1,37 +1,69 @@
-import { Mesh, Scene, BoxGeometry, MeshToonMaterial } from "three";
+import { Mesh, Scene, BoxGeometry, MeshToonMaterial, AnimationMixer, Vector3, Group } from "three";
+import * as MathHelper from '../utils/math-helper';
+import Store from '../store';
 
-export default class Body {
-    // collider: any; // TODO:
-    public mesh: Mesh;
-    // animations: any; // TODO:
-    constructor() {
-        // this.collider = null;
-        this.mesh = this.createMesh();
+interface IBody {
+    init(): Promise<void>
+    appendToScene(scene: Scene): void;
+    getMesh(): Group;
+    move(position: {x: number, y: number, z: number}, rotation: {x: number, y: number, z: number}): void;
+}
+
+export default class Body implements IBody{
+    private store: Store;
+    public mesh: Group;
+    private mixer: AnimationMixer;
+    private animations: Array<any>; 
+
+    constructor(model: string, animations: Array<any>) {
+        this.store = Store.getInstance();
+        this.mixer = null;
+        this.mesh = null;
         // this.animations = null;
     }
 
-    createMesh(): Mesh {
-        const playerGeometry = new BoxGeometry( 1,  1,  1 );
-        const playerMaterial = new MeshToonMaterial( { color: 0x64495e } );
-        const mesh: Mesh = new Mesh( playerGeometry, playerMaterial );
-        mesh.position.z = 0.501;
-        mesh.position.x = 4;
-        mesh.position.y = 4;
-        mesh.name = 'Player';
+    public init():Promise<void> {
+        return new Promise((resolve) => {
 
-        const weaponGeometry = new BoxGeometry( 0.3,  0.3,  0.3 );
-        const weaponMaterial = new MeshToonMaterial( { color: 0x64495e } );
-        const weapon: Mesh = new Mesh( weaponGeometry, weaponMaterial );
-        weapon.position.z = 0.501;
-        weapon.position.x = 0;
-        weapon.position.y = 0.6;
-        weapon.name = 'Player weapon';
-        mesh.add(weapon);
-
-        return mesh;
+            this.createMesh().then((data) => {
+                this.mixer = data.mixer;
+                this.mesh = data.object;
+                resolve();
+            });
+            
+        })
     }
 
-    move(position: {x: number, y: number, z: number}, rotation: {x: number, y: number, z: number}): void {
+    private createMesh(): Promise<{mixer: AnimationMixer, object: Group}> {
+        return new Promise((resolve) => {
+            this.store.getResource('src/assets/models/character.fbx', 'model').then((data) => {
+                let object = data.content;
+                let mixer = new AnimationMixer(object);
+                
+                object.traverse( function ( child ) {
+                    child.castShadow = true;
+                    child.receiveShadow = true;
+                } );
+    
+                let scaleModify = 0.013;
+                object.scale.x = scaleModify;
+                object.scale.y = scaleModify;
+                object.scale.z = scaleModify;
+    
+                let result = {
+                    mixer: mixer,
+                    object: object
+                }
+                resolve(result);
+            }); 
+        });
+    }
+
+    public getMesh(): Group {
+        return this.mesh
+    }
+
+    public move(position: {x: number, y: number, z: number}, rotation: {x: number, y: number, z: number}): void {
         this.mesh.position.x = position.x;
         this.mesh.position.y = position.y;
         this.mesh.position.z = position.z;
@@ -40,7 +72,7 @@ export default class Body {
         this.mesh.rotation.z = rotation.z;
     }
 
-    appendToScene(scene: Scene): void {
+    public appendToScene(scene: Scene): void {
         scene.add(this.mesh);
     }
 }

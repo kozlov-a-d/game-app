@@ -62,7 +62,7 @@ export default class Level {
         this.map.forEach((row, rowIndex) => {
             row.forEach((cell, cellIndex) => {
                 if (cell == 1) {
-                    this.meshList.push(ThreeHelper.createBox({ x: cellIndex, y: rowIndex, z: 0.501}, { x: 1, y: 1, z: 4}));
+                    this.meshList.push(ThreeHelper.createBox({ x: cellIndex, y: rowIndex, z: 0.501}));
                 }
             })
         })
