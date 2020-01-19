@@ -4,7 +4,7 @@ interface IController {
     // getNewPosition(inputsState: { [key: string]: boolean; }): void;
 }
 
-export default class Controller implements IController {
+export default class ActionsController implements IController {
     speed: number;
     constructor() {
         this.speed = 10;

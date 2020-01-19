@@ -34,7 +34,7 @@ export function createLightGlobal(color?: string | number | Color, intensity?: n
 }
 
 const geometryPlane = new PlaneGeometry( 100, 100, 32 );
-const materialPlane = new MeshLambertMaterial( {color: 0x374a5b, side: DoubleSide} );
+const materialPlane = new MeshLambertMaterial( {color: 0x666771, side: DoubleSide} );
 
 export function createPlane(coordCenter:{x: number, y: number, z:number}): Mesh {
     let plane =  new Mesh( geometryPlane, materialPlane );

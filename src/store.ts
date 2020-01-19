@@ -79,7 +79,7 @@ export default class Store implements IStore {
     private load(resource: Resource): Promise<Resource> {
         switch(resource.type) {
             case 'model': return this.loadModel(resource);
-            case 'animation': this.loadAnimation(resource);
+            case 'animation': return this.loadAnimation(resource);
         }
     }   
 
@@ -96,7 +96,7 @@ export default class Store implements IStore {
 
     private loadAnimation(resource: Resource): Promise<Resource> {
         return new Promise((resolve) => {
-            this.loaders.fbx.load(resource.url, ( object ) => {
+            this.loaders.fbx.load(resource.url, function( object ) {
                 resource.content = object;
                 resource.isLoaded = true;
                 resolve(resource); 

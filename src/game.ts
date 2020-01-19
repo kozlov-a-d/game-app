@@ -51,7 +51,7 @@ export default class Game{
         this.time = time;
 
         this.player.update( deltaTime );
-        // this.renderer.render( this.scene, this.camera );
+        this.renderer.render( this.scene, this.camera );
         requestAnimationFrame((time) => this.run(time));
     }
 

@@ -1,9 +1,10 @@
 import { Mesh, Scene, BoxGeometry, MeshToonMaterial, AnimationMixer, Vector3, Group } from "three";
 import * as MathHelper from '../utils/math-helper';
 import Store from '../store';
+import AnimationsController from "./animations-controller";
 
 interface IBody {
-    init(): Promise<void>
+    init(resources: any): Promise<void>
     appendToScene(scene: Scene): void;
     getMesh(): Group;
     move(position: {x: number, y: number, z: number}, rotation: {x: number, y: number, z: number}): void;
@@ -13,30 +14,36 @@ export default class Body implements IBody{
     private store: Store;
     public mesh: Group;
     private mixer: AnimationMixer;
-    private animations: Array<any>; 
+    public animations: AnimationsController;
 
     constructor(model: string, animations: Array<any>) {
         this.store = Store.getInstance();
         this.mixer = null;
         this.mesh = null;
-        // this.animations = null;
+        this.animations = null;
     }
 
-    public init():Promise<void> {
+    public init(resources: { model: string, animations: Array<{ [key: string]: string; }>, audio: string }):Promise<void> {
         return new Promise((resolve) => {
 
-            this.createMesh().then((data) => {
+            this.loadMesh(resources.model).then((data) => {
                 this.mixer = data.mixer;
                 this.mesh = data.object;
-                resolve();
+                this.mesh.name = 'Player';
+                console.log('loadMesh'); 
+
+                this.animations = new AnimationsController(this.mixer);
+                this.loadAnimations(resources.animations).then(() => {
+                    console.log('loadAnimations', this.animations); 
+                    resolve();
+                });
             });
-            
-        })
+        });
     }
 
-    private createMesh(): Promise<{mixer: AnimationMixer, object: Group}> {
+    private loadMesh(url: string): Promise<{mixer: AnimationMixer, object: Group}> {
         return new Promise((resolve) => {
-            this.store.getResource('src/assets/models/character.fbx', 'model').then((data) => {
+            this.store.getResource(url, 'model').then((data) => {
                 let object = data.content;
                 let mixer = new AnimationMixer(object);
                 
@@ -57,6 +64,16 @@ export default class Body implements IBody{
                 resolve(result);
             }); 
         });
+    }
+
+    private loadAnimations(animations: { [key: string]: string; }[]): any {
+        return this.animations.init(animations);
+    }
+
+    public updateMixer(deltaTime:number): void {
+        if ( this.mixer && deltaTime > 0 ) {
+            this.mixer.update( deltaTime/1000 );
+        };
     }
 
     public getMesh(): Group {
