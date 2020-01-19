@@ -43,7 +43,6 @@ export default class Player {
         this.store = Store.getInstance();
         this.body = new Body(this.config.resources.model, this.config.resources.animations);
         this.camera = null;
-        this.camera = null;
         this.inputs = new Inputs();
         this.actionsController = new ActionsController();
     }
@@ -78,7 +77,7 @@ export default class Player {
             const moveDirectionTitle = this.actionsController.calcRelativeDirectionOfMovement(this.rotation.y, moveDirection);
             // TODO: проверка колайдера
 
-            // TODO: вызов анимации по moveDirectionTitle
+            // вызов анимации по moveDirectionTitle
             this.body.animations.changeTo('shoot-rifle-run-' + moveDirectionTitle);
             this.position = newPosition; 
         } else {

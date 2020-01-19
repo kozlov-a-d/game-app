@@ -28,6 +28,7 @@ export default class Game{
 
         this.container = rootNode ? rootNode : document.querySelector('body');
         rootNode.appendChild(this.renderer.domElement);
+        
 
         // add player
         this.player = new Player();
@@ -42,6 +43,7 @@ export default class Game{
 
         this.player.init(this.scene, this.camera).then(() => {  
             this.run();
+            this.container.classList.add('is-loaded');
         });
     }
 
