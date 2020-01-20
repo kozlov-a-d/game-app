@@ -140,7 +140,7 @@ eval("\n\nvar __importStar = this && this.__importStar || function (mod) {\n  if
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nvar __importDefault = this && this.__importDefault || function (mod) {\n  return mod && mod.__esModule ? mod : {\n    \"default\": mod\n  };\n};\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar game_1 = __importDefault(__webpack_require__(/*! ./game */ \"./src/game.ts\"));\n\nvar gameNode = document.getElementById('game');\nnew game_1[\"default\"](gameNode);\n\n//# sourceURL=webpack:///./src/index.ts?");
+eval("\n\nvar __importDefault = this && this.__importDefault || function (mod) {\n  return mod && mod.__esModule ? mod : {\n    \"default\": mod\n  };\n};\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar game_1 = __importDefault(__webpack_require__(/*! ./game */ \"./src/game.ts\"));\n\nvar gameNode = document.getElementById('game');\nnew game_1[\"default\"](gameNode); // отдельный файл, где тестить создание нескольких боди\n// тестовая сцена, для просмотра и блендинга анимаций и направлений\n\n//# sourceURL=webpack:///./src/index.ts?");
 
 /***/ }),
 

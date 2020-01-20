@@ -4,6 +4,7 @@
   "assets/audio/weapon--beretta-m9--misfire.mp3": "/./assets/audio/weapon--beretta-m9--misfire.mp3",
   "assets/audio/weapon--beretta-m9--reload.mp3": "/./assets/audio/weapon--beretta-m9--reload.mp3",
   "assets/audio/weapon--beretta-m9--shoot.mp3": "/./assets/audio/weapon--beretta-m9--shoot.mp3",
+  "assets/images/frontend_assets_images_loader.svg": "/./assets/images/frontend_assets_images_loader.svg",
   "assets/images/ground0004.jpg": "/./assets/images/ground0004.jpg",
   "assets/images/wall0008.jpg": "/./assets/images/wall0008.jpg",
   "assets/models/character.fbx": "/./assets/models/character.fbx",
@@ -43,7 +44,5 @@
   "assets/models/character@shoot-rifle-run-left.fbx": "/./assets/models/character@shoot-rifle-run-left.fbx",
   "assets/models/character@shoot-rifle-run-right.fbx": "/./assets/models/character@shoot-rifle-run-right.fbx",
   "assets/models/character@shoot-rifle-stay.fbx": "/./assets/models/character@shoot-rifle-stay.fbx",
-  "assets/models/player.fbx": "/./assets/models/player.fbx",
-  "assets/images/frontend_assets_images_loader.svg.crdownload": "/./assets/images/frontend_assets_images_loader.svg.crdownload",
-  "assets/images/frontend_assets_images_loader.svg": "/./assets/images/frontend_assets_images_loader.svg"
+  "assets/models/player.fbx": "/./assets/models/player.fbx"
 }
