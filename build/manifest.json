@@ -45,5 +45,8 @@
   "assets/models/character@shoot-rifle-run-right.fbx": "/./assets/models/character@shoot-rifle-run-right.fbx",
   "assets/models/character@shoot-rifle-stay.fbx": "/./assets/models/character@shoot-rifle-stay.fbx",
   "assets/models/player.fbx": "/./assets/models/player.fbx",
-  "assets/images/loader.svg": "/./assets/images/loader.svg"
+  "assets/images/loader.svg": "/./assets/images/loader.svg",
+  "index.css": "/index.css",
+  "assets/images/favicon.ico": "/./assets/images/favicon.ico",
+  "images/favicon.ico": "/images/favicon.5b011902.ico"
 }
