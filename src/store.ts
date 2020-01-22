@@ -10,7 +10,7 @@ export type Resource = {
     url: string;
     isLoaded: boolean;
     content: Group;
-    callback: any;
+    callback: () => void;
 };
 
 export default interface Store {
@@ -50,7 +50,7 @@ export default class Store implements Store {
                 if (exist.isLoaded) {
                     resolve(exist); // если да, то сразу отадем загруженый ресурс
                 } else {
-                    exist.callback = () => { resolve(exist); } // если нет, то надо ждать пока другой промис его загрузит и потом отдать
+                    exist.callback = (): void => { resolve(exist); } // если нет, то надо ждать пока другой промис его загрузит и потом отдать
                 }
             }
         })
@@ -72,7 +72,7 @@ export default class Store implements Store {
             url: url,
             isLoaded: false,
             content: null,
-            callback: function () {}
+            callback: null
         }
     }
 

@@ -2,7 +2,7 @@ import { Camera, Mesh, Scene } from "three";
 import Body from "./body";
 import Inputs from "./inputs";
 import ActionsController from "./actions-controller";
-import * as MathHelper from '../utils/math-helper';
+import Utils from '../utils/';
 import Store from "../store";
 
 export default class Player {
@@ -41,7 +41,8 @@ export default class Player {
         // может тогда ресурсы прям тут грузить, а дальше прокидывать уже загруженные объекты?
 
         this.store = Store.getInstance();
-        this.body = new Body(this.config.resources.model, this.config.resources.animations);
+        // this.body = new Body(this.config.resources.model, this.config.resources.animations);
+        this.body = new Body();
         this.camera = null;
         this.inputs = new Inputs();
         this.actionsController = new ActionsController();
@@ -73,7 +74,7 @@ export default class Player {
     move(inputsState: { [key: string]: boolean }, deltaTime: number): void {
         if (inputsState.up || inputsState.down || inputsState.left || inputsState.right) {
             const newPosition = this.actionsController.getNewPosition(this.position, inputsState, this.rotation.y, deltaTime);
-            const moveDirection = MathHelper.calcAngleFromAxisY({x: newPosition.x - this.position.x, y: newPosition.y - this.position.y});
+            const moveDirection = Utils.math.calcAngleFromAxisY({x: newPosition.x - this.position.x, y: newPosition.y - this.position.y});
             const moveDirectionTitle = this.actionsController.calcRelativeDirectionOfMovement(this.rotation.y, moveDirection);
             // TODO: проверка колайдера
 

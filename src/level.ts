@@ -1,5 +1,5 @@
 import { AmbientLight, Mesh } from 'three';
-import * as ThreeHelper from './utils/three-helper';
+import Utils from './utils/';
 
 export default class Level {
     lightList: Array<AmbientLight>;
@@ -9,7 +9,7 @@ export default class Level {
         this.lightList = [];
         this.meshList = [];
 
-        this.lightList.push(ThreeHelper.createLightGlobal());
+        this.lightList.push(Utils.three.createLightGlobal());
 
         this.map = [
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -55,14 +55,14 @@ export default class Level {
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
         ];
 
-        this.meshList.push(ThreeHelper.createPlane(
+        this.meshList.push(Utils.three.createPlane(
             { x: this.map.length/2, y: this.map.length/2, z: 0}
         ));
 
         this.map.forEach((row, rowIndex) => {
             row.forEach((cell, cellIndex) => {
                 if (cell == 1) {
-                    this.meshList.push(ThreeHelper.createBox({ x: cellIndex, y: rowIndex, z: 0.501}));
+                    this.meshList.push(Utils.three.createBox({ x: cellIndex, y: rowIndex, z: 0.501}));
                 }
             })
         })

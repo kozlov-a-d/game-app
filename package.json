@@ -4,7 +4,7 @@
         "watch": "yarn encore dev --watch",
         "serve": "yarn encore dev --watch",
         "test": "mocha -r ts-node/register 'test/**/*.unit.test.ts'",
-        "eslint": "eslint ./src --ext .js,.jsx,.ts,.tsx",
+        "eslint": "./node_modules/.bin/eslint ./src --ext .js,.jsx,.ts,.tsx",
         "prettier": "prettier 'src/**/*.ts'"
     },
     "devDependencies": {

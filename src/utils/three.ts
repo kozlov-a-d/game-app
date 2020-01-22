@@ -1,4 +1,4 @@
-import { WebGLRenderer, PerspectiveCamera, AmbientLight, PlaneGeometry, MeshLambertMaterial, DoubleSide, Mesh, BoxGeometry, Color } from 'three';
+import { WebGLRenderer, PerspectiveCamera, AmbientLight, PlaneGeometry, MeshLambertMaterial, DoubleSide, Mesh, BoxGeometry, Color, Group, Bone } from 'three';
 
 // COMMON
 
@@ -59,4 +59,45 @@ export function createBox(position: {x: number; y: number; z: number}): Mesh {
     box.receiveShadow = true;
     box.name = "box";
     return box;
+}
+
+type CallbackFunctionVariadic = (...args: any[]) => void;
+
+function parallelTraverse( a: any, b: any, callback: CallbackFunctionVariadic ): void {
+    callback( a, b );
+    for ( let i = 0; i < a.children.length; i ++ ) {
+        parallelTraverse( a.children[ i ], b.children[ i ], callback );
+    }
+}
+
+export function cloneSkinnedMeshes( source: Group ): Group {
+
+    const sourceLookup = new Map();
+    const cloneLookup = new Map();
+
+    const clone = source.clone();
+
+    parallelTraverse( source, clone, function ( sourceNode: any, clonedNode: any ) {
+        sourceLookup.set( clonedNode, sourceNode );
+        cloneLookup.set( sourceNode, clonedNode );
+    } );
+
+    clone.traverse( function ( node: any ) {
+        if ( ! node.isSkinnedMesh ) return;
+
+        const clonedMesh = node;
+        const sourceMesh = sourceLookup.get( node );
+        const sourceBones = sourceMesh.skeleton.bones;
+
+        clonedMesh.skeleton = sourceMesh.skeleton.clone();
+        clonedMesh.bindMatrix.copy( sourceMesh.bindMatrix );
+
+        clonedMesh.skeleton.bones = sourceBones.map( function ( bone: Bone ) {
+            return cloneLookup.get( bone );
+        } );
+
+        clonedMesh.bind( clonedMesh.skeleton, clonedMesh.bindMatrix );
+    } );
+
+    return clone;
 }

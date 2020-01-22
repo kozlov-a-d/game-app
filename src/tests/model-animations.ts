@@ -1,6 +1,6 @@
 import { Scene, WebGLRenderer, PerspectiveCamera, Mesh, PlaneGeometry, MeshBasicMaterial, DoubleSide, AxesHelper, AnimationMixer, Group, DirectionalLight } from "three";
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
-import * as ThreeHelper from '../utils/three-helper'; 
+import Utils from '../utils/';
 import Player from "../characters/player";
 
 export default class TestModelAnimations {
@@ -20,9 +20,9 @@ export default class TestModelAnimations {
         this.time = 0;
         this.scene = new Scene();
 
-        this.renderer = ThreeHelper.initRenderer();
+        this.renderer = Utils.three.initRenderer();
 
-        this.camera = ThreeHelper.initCamera();
+        this.camera = Utils.three.initCamera();
         this.camera.position.set( 0, -5, 2 );
         this.camera.lookAt( 0, 0, 0 );
 
@@ -37,7 +37,7 @@ export default class TestModelAnimations {
         this.loader = new FBXLoader();
 
         this.loader.load('build/assets/models/character.fbx', ( object ) => {
-            const clone = this.clone(object);
+            const clone = Utils.three.cloneSkinnedMeshes(object);
             console.log(object);
             // this.mixer = new AnimationMixer(clone);
             
@@ -63,7 +63,7 @@ export default class TestModelAnimations {
             this.scene.add(this.mesh1);
 
 
-            const clone2 = this.clone(object);
+            const clone2 = Utils.three.cloneSkinnedMeshes(object);
             console.log(object);
             // this.mixer = new AnimationMixer(clone);
             
@@ -107,56 +107,6 @@ export default class TestModelAnimations {
         return plane;
     }
 
-    clone( source: any ) {
-
-        function parallelTraverse( a: any, b: any, callback: any ) {
-
-            callback( a, b );
-        
-            for ( let i = 0; i < a.children.length; i ++ ) {
-        
-                parallelTraverse( a.children[ i ], b.children[ i ], callback );
-        
-            }
-        
-        }
-
-        const sourceLookup = new Map();
-		const cloneLookup = new Map();
-
-		const clone = source.clone();
-
-		parallelTraverse( source, clone, function ( sourceNode: any, clonedNode: any ) {
-
-			sourceLookup.set( clonedNode, sourceNode );
-			cloneLookup.set( sourceNode, clonedNode );
-
-		} );
-
-		clone.traverse( function ( node: any ) {
-
-			if ( ! node.isSkinnedMesh ) return;
-
-			const clonedMesh = node;
-			const sourceMesh = sourceLookup.get( node );
-			const sourceBones = sourceMesh.skeleton.bones;
-
-			clonedMesh.skeleton = sourceMesh.skeleton.clone();
-			clonedMesh.bindMatrix.copy( sourceMesh.bindMatrix );
-
-			clonedMesh.skeleton.bones = sourceBones.map( function ( bone: any ) {
-
-				return cloneLookup.get( bone );
-
-			} );
-
-			clonedMesh.bind( clonedMesh.skeleton, clonedMesh.bindMatrix );
-
-		} );
-
-		return clone;
-    }
-
     initGlobalLight(): void {
         const dirLight = new DirectionalLight( 0xffffff );
         dirLight.position.set( - 3, -10, 10 );
@@ -171,7 +121,7 @@ export default class TestModelAnimations {
     }
 
     update(deltaTime: number): void {
-
+        deltaTime = deltaTime + 0;
     }
 
     run(time?: number): void {

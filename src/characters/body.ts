@@ -15,7 +15,8 @@ export default class Body implements Body{
     private mixer: AnimationMixer;
     public animations: AnimationsController;
 
-    constructor(model: string, animations: Array<any>) {
+    // constructor(model: string, animations: Array<any>) {
+    constructor() {
         this.store = Store.getInstance();
         this.mixer = null;
         this.mesh = null;

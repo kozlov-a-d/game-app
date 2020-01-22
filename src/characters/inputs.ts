@@ -1,4 +1,4 @@
-import * as MathHelper from '../utils/math-helper';
+import Utils from '../utils/';
 
 export default class Inputs {
     states: { [key: string]: boolean };
@@ -65,7 +65,7 @@ export default class Inputs {
     }
 
     private calcMouseRotation(x: number, y: number): number {
-        return MathHelper.calcAngleFromAxisY({x: x, y: y}); 
+        return Utils.math.calcAngleFromAxisY({x: x, y: y}); 
     }
 
     public getMouseRotation(): number {

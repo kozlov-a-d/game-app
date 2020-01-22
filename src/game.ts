@@ -1,5 +1,5 @@
 import { Scene, WebGLRenderer, PerspectiveCamera } from 'three';
-import * as ThreeHelper from './utils/three-helper'; 
+import Utils from './utils/';
 import Player from './characters/player';
 import Level from './level';
 import Store from './store';
@@ -22,8 +22,8 @@ export default class Game{
         // LoadScene, MainMenuScena, GameScene
         this.scene = new Scene();
 
-        this.renderer = ThreeHelper.initRenderer();
-        this.camera = ThreeHelper.initCamera();
+        this.renderer = Utils.three.initRenderer();
+        this.camera = Utils.three.initCamera();
 
         this.container = rootNode ? rootNode : document.querySelector('body');
         rootNode.appendChild(this.renderer.domElement);
@@ -37,8 +37,8 @@ export default class Game{
         this.level.lightList.forEach((item) => { this.scene.add(item); });
         this.level.meshList.forEach((item) => { this.scene.add(item); });
 
-        ThreeHelper.onResize(this.renderer, this.camera);
-        window.addEventListener('resize', () => ThreeHelper.onResize(this.renderer, this.camera));
+        Utils.three.onResize(this.renderer, this.camera);
+        window.addEventListener('resize', () => Utils.three.onResize(this.renderer, this.camera));
 
         this.player.init(this.scene, this.camera).then(() => {  
             this.run();

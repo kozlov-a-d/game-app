@@ -1,4 +1,4 @@
-import { AnimationMixer, AnimationClip } from "three";
+import { AnimationMixer } from "three";
 import Store from '../store';
 import { AnimationAction } from "three/src/animation/AnimationAction";
 
@@ -38,7 +38,7 @@ export default class AnimationsController implements AnimationsController{
             promises.push(this.store.getResource(animation.url, 'animation').then((data) => {
                 // костыль, потмоу что у типа Group почему то нет поля animations, хотя он есть
                 const content: any = data.content;
-                const animationClip  = content.animations[0];
+                const animationClip = content.animations[0];
                 
                 this.list[animation.name] = this.mixer.clipAction(animationClip);
                 this.list[animation.name].play();
@@ -60,7 +60,7 @@ export default class AnimationsController implements AnimationsController{
         }
 
         function crossFade( startAction: AnimationAction, endAction: AnimationAction, duration: number ): void {
-            let timerId: any = null;
+            let timerId: NodeJS.Timeout = null;
             let step = 0;
             const totalSteps = 10;
 
