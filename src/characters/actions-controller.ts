@@ -9,9 +9,9 @@ export default class ActionsController implements ActionsController {
         this.speed = 10;
     }
 
-    public getNewPosition(currentPosition: {x: number, y: number, z :number}, inputsState: { [key: string]: boolean; }, angle: number, deltaTime: number): {x: number, y: number, z :number} {
+    public getNewPosition(currentPosition: {x: number; y: number; z: number}, inputsState: { [key: string]: boolean }, angle: number, deltaTime: number): {x: number; y: number; z: number} {
         const distance = this.speed / 1000 * deltaTime;
-        let newPosition = {
+        const newPosition = {
             x: currentPosition.x,
             y: currentPosition.y,
             z: currentPosition.z,
@@ -26,7 +26,7 @@ export default class ActionsController implements ActionsController {
     }
 
     public calcRelativeDirectionOfMovement(meshDirection: number, moveDirection: number): string {
-        let deltaDirection = MathHelper.RadianToDegree( meshDirection - moveDirection );
+        const deltaDirection = MathHelper.RadianToDegree( meshDirection - moveDirection );
         const direction = MathHelper.calcRelativeDirection( deltaDirection );
 
         return direction;

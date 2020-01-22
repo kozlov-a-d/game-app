@@ -14,7 +14,7 @@ export type Resource = {
 };
 
 export default interface Store {
-    getResource(type: ResourceType, url: string): Promise<Resource> 
+    getResource(type: ResourceType, url: string): Promise<Resource>; 
 }
 
 export default class Store implements Store {
@@ -52,7 +52,7 @@ export default class Store implements Store {
                 } else {
                     exist.callback = () => { resolve(exist); } // если нет, то надо ждать пока другой промис его загрузит и потом отдать
                 }
-            };
+            }
         })
     }
 

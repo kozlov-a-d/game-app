@@ -14,7 +14,7 @@ export default class Player {
     actionsController: ActionsController;
     camera: Camera | null;
     store: Store;
-    config: { resources: { model: string; animations: Array<{ [key: string]: string; }>; audio: string }};
+    config: { resources: { model: string; animations: Array<{ [key: string]: string }>; audio: string }};
 
     constructor() {
         this.position = { x: 4, y: 4, z: 0};

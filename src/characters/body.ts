@@ -6,7 +6,7 @@ export default interface Body {
     init(resources: any): Promise<void>;
     appendToScene(scene: Scene): void;
     getMesh(): Group;
-    move(position: {x: number, y: number, z: number}, rotation: {x: number, y: number, z: number}): void;
+    move(position: {x: number; y: number; z: number}, rotation: {x: number; y: number; z: number}): void;
 }
 
 export default class Body implements Body{
@@ -22,7 +22,7 @@ export default class Body implements Body{
         this.animations = null;
     }
 
-    public init(resources: { model: string, animations: Array<{ [key: string]: string; }>, audio: string }):Promise<void> {
+    public init(resources: { model: string; animations: Array<{ [key: string]: string }>; audio: string }): Promise<void> {
         return new Promise((resolve) => {
 
             this.loadMesh(resources.model).then((data) => {
@@ -40,7 +40,7 @@ export default class Body implements Body{
         });
     }
 
-    private loadMesh(url: string): Promise<{mixer: AnimationMixer, object: Group}> {
+    private loadMesh(url: string): Promise<{mixer: AnimationMixer; object: Group}> {
         return new Promise((resolve) => {
             this.store.getResource(url, 'model').then((data) => {
                 const object = data.content;
@@ -65,14 +65,14 @@ export default class Body implements Body{
         });
     }
 
-    private loadAnimations(animations: { [key: string]: string; }[]): any {
+    private loadAnimations(animations: { [key: string]: string }[]): any {
         return this.animations.init(animations);
     }
 
     public updateMixer(deltaTime: number): void {
         if ( this.mixer && deltaTime > 0 ) {
             this.mixer.update( deltaTime/1000 );
-        };
+        }
     }
 
     public getMesh(): Group {

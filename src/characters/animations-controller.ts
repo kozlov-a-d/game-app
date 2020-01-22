@@ -22,7 +22,7 @@ export default class AnimationsController implements AnimationsController{
         this.store = Store.getInstance();
     }
 
-    init(animationsList: { [key: string]: string; }[]): any {
+    init(animationsList: { [key: string]: string }[]): any {
         return new Promise((resolve) => {
             this.loadAnimations(animationsList).then(() => {
                 this.changeTo('idle-rifle-stay');
@@ -32,13 +32,13 @@ export default class AnimationsController implements AnimationsController{
         });
     }
 
-    loadAnimations(animationsList: { [key: string]: string; }[]): any {
+    loadAnimations(animationsList: { [key: string]: string }[]): any {
         const promises: any = [];
         animationsList.forEach((animation) => {
             promises.push(this.store.getResource(animation.url, 'animation').then((data) => {
                 // костыль, потмоу что у типа Group почему то нет поля animations, хотя он есть
-                let content: any = data.content;
-                let animationClip  = content.animations[0];
+                const content: any = data.content;
+                const animationClip  = content.animations[0];
                 
                 this.list[animation.name] = this.mixer.clipAction(animationClip);
                 this.list[animation.name].play();

@@ -3,7 +3,7 @@ import * as MathHelper from '../utils/math-helper';
 export default class Inputs {
     states: { [key: string]: boolean };
     keyMap: any;
-    coordMouse: { x: number, y: number};
+    coordMouse: { x: number; y: number};
     coordScreenCenter: { x: number; y: number};
     rotation: number;
 
