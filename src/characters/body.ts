@@ -3,7 +3,7 @@ import Store from '../store';
 import AnimationsController from "./animations-controller";
 
 export default interface Body {
-    init(resources: any): Promise<void>;
+    init(model: Group): void;
     appendToScene(scene: Scene): void;
     getMesh(): Group;
     move(position: {x: number; y: number; z: number}, rotation: {x: number; y: number; z: number}): void;
@@ -16,54 +16,38 @@ export default class Body implements Body{
     public animations: AnimationsController;
 
     // constructor(model: string, animations: Array<any>) {
-    constructor() {
+    constructor(model: Group) {
         this.store = Store.getInstance();
         this.mixer = null;
         this.mesh = null;
         this.animations = null;
+
+        this.init(model);
     }
 
-    public init(resources: { model: string; animations: Array<{ [key: string]: string }>; audio: string }): Promise<void> {
-        return new Promise((resolve) => {
+    public init(model: Group): void {
+        this.mixer = new AnimationMixer(model);
+        this.mesh = this.loadMesh(model);
+        this.mesh.name = 'Player';
+        console.log('loadMesh'); 
 
-            this.loadMesh(resources.model).then((data) => {
-                this.mixer = data.mixer;
-                this.mesh = data.object;
-                this.mesh.name = 'Player';
-                console.log('loadMesh'); 
-
-                this.animations = new AnimationsController(this.mixer);
-                this.loadAnimations(resources.animations).then(() => {
-                    console.log('loadAnimations', this.animations); 
-                    resolve();
-                });
-            });
-        });
+        this.animations = new AnimationsController(this.mixer);
+        // this.loadAnimations(resources.animations).then(() => {
+        //     console.log('loadAnimations', this.animations); 
+        // });
     }
 
-    private loadMesh(url: string): Promise<{mixer: AnimationMixer; object: Group}> {
-        return new Promise((resolve) => {
-            this.store.getResource(url, 'model').then((data) => {
-                const object = data.content;
-                const mixer = new AnimationMixer(object);
-                
-                object.traverse( function ( child ) {
-                    child.castShadow = true;
-                    child.receiveShadow = true;
-                } );
-    
-                const scaleModify = 0.013;
-                object.scale.x = scaleModify;
-                object.scale.y = scaleModify;
-                object.scale.z = scaleModify;
-    
-                const result = {
-                    mixer: mixer,
-                    object: object
-                }
-                resolve(result);
-            }); 
-        });
+    private loadMesh(model: Group): Group {
+        model.traverse( function ( child ) {
+            child.castShadow = true;
+            child.receiveShadow = true;
+        } );
+        const scaleModify = 0.013;
+        model.scale.x = scaleModify;
+        model.scale.y = scaleModify;
+        model.scale.z = scaleModify;
+
+        return model;
     }
 
     private loadAnimations(animations: { [key: string]: string }[]): any {

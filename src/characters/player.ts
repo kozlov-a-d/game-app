@@ -38,27 +38,32 @@ export default class Player {
             }
         }
 
-        // может тогда ресурсы прям тут грузить, а дальше прокидывать уже загруженные объекты?
-
         this.store = Store.getInstance();
-        // this.body = new Body(this.config.resources.model, this.config.resources.animations);
-        this.body = new Body();
-        this.camera = null;
         this.inputs = new Inputs();
         this.actionsController = new ActionsController();
     }
 
     init(scene: Scene, camera: Camera): Promise<Player> {
         return new Promise((resolve) => {
-            this.body.init(this.config.resources).then(() => {
+
+            this.store.getResource(this.config.resources.model, 'model').then((data) => {
                 console.log('loadPlayerBody'); 
+                const model = Utils.three.cloneSkinnedMeshes(data.content);
+                this.body = new Body(model);
                 this.body.appendToScene(scene);
                 this.useCamera(camera);
                 this.setPosition(18, 18, 0.001);
-                resolve(this)
+
+                resolve(this);
             });
         });
     }
+
+    // loadResources(): Promise<void> {
+    //     return new Promise((resolve) => {
+
+    //     });
+    // }
 
     moveCamera(): void {
         if (this.camera) {
@@ -79,10 +84,10 @@ export default class Player {
             // TODO: проверка колайдера
 
             // вызов анимации по moveDirectionTitle
-            this.body.animations.changeTo('shoot-rifle-run-' + moveDirectionTitle);
+            // this.body.animations.changeTo('shoot-rifle-run-' + moveDirectionTitle);
             this.position = newPosition; 
         } else {
-            this.body.animations.changeTo('idle-rifle-stay');
+            // this.body.animations.changeTo('idle-rifle-stay');
         }
     }
 
