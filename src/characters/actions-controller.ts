@@ -1,10 +1,9 @@
 import * as MathHelper from '../utils/math-helper';
 
-interface IController {
-    // getNewPosition(inputsState: { [key: string]: boolean; }): void;
+export default interface ActionsController {
 }
 
-export default class ActionsController implements IController {
+export default class ActionsController implements ActionsController {
     speed: number;
     constructor() {
         this.speed = 10;
@@ -26,7 +25,7 @@ export default class ActionsController implements IController {
         return newPosition;
     }
 
-    public calcRelativeDirectionOfMovement(meshDirection:number, moveDirection:number): string {
+    public calcRelativeDirectionOfMovement(meshDirection: number, moveDirection: number): string {
         let deltaDirection = MathHelper.RadianToDegree( meshDirection - moveDirection );
         const direction = MathHelper.calcRelativeDirection( deltaDirection );
 

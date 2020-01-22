@@ -1,10 +1,10 @@
 import * as MathHelper from '../utils/math-helper';
 
 export default class Inputs {
-    states: { [key: string]: boolean; };
+    states: { [key: string]: boolean };
     keyMap: any;
     coordMouse: { x: number, y: number};
-    coordScreenCenter: { x: number, y: number};
+    coordScreenCenter: { x: number; y: number};
     rotation: number;
 
     constructor() {
@@ -72,7 +72,7 @@ export default class Inputs {
         return this.rotation;
     }
 
-    public getStates(): { [key: string]: boolean; } {
+    public getStates(): { [key: string]: boolean } {
         return this.states;
     }
 }

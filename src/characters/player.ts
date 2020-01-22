@@ -6,20 +6,20 @@ import * as MathHelper from '../utils/math-helper';
 import Store from "../store";
 
 export default class Player {
-    position: {x: number, y: number, z: number};
-    rotation: {x: number, y: number, z: number};
+    position: { x: number; y: number; z: number };
+    rotation: { x: number; y: number; z: number };
     body: Body;
     collider: Mesh;
     inputs: Inputs;
     actionsController: ActionsController;
     camera: Camera | null;
     store: Store;
-    config: { resources: { model: string, animations: Array<{ [key: string]: string; }>, audio: string }};
+    config: { resources: { model: string; animations: Array<{ [key: string]: string; }>; audio: string }};
 
     constructor() {
         this.position = { x: 4, y: 4, z: 0};
         this.rotation = { x: 270 * Math.PI/180, y: 0, z: 180 * Math.PI/180};
-        let path: string = 'build/assets/models/';
+        const path = 'build/assets/models/';
         this.config = {
             resources: {
                 model: path + 'character.fbx',
@@ -70,9 +70,9 @@ export default class Player {
         this.camera = camera;
     }
 
-    move(inputsState: { [key: string]: boolean; }, deltaTime: number): void {
+    move(inputsState: { [key: string]: boolean }, deltaTime: number): void {
         if (inputsState.up || inputsState.down || inputsState.left || inputsState.right) {
-            let newPosition = this.actionsController.getNewPosition(this.position, inputsState, this.rotation.y, deltaTime);
+            const newPosition = this.actionsController.getNewPosition(this.position, inputsState, this.rotation.y, deltaTime);
             const moveDirection = MathHelper.calcAngleFromAxisY({x: newPosition.x - this.position.x, y: newPosition.y - this.position.y});
             const moveDirectionTitle = this.actionsController.calcRelativeDirectionOfMovement(this.rotation.y, moveDirection);
             // TODO: проверка колайдера

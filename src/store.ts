@@ -4,20 +4,20 @@ import { Group } from 'three';
 export type ResourceType = 'model' | 'animation' | 'texture';
 
 export type Resource = {
-    id?: number,
-    type: ResourceType,
-    name?: string,
-    url: string,
-    isLoaded: boolean,
-    content: Group,
-    callback: any
+    id?: number;
+    type: ResourceType;
+    name?: string;
+    url: string;
+    isLoaded: boolean;
+    content: Group;
+    callback: any;
 };
 
-interface IStore {
+export default interface Store {
     getResource(type: ResourceType, url: string): Promise<Resource> 
 }
 
-export default class Store implements IStore {
+export default class Store implements Store {
     private static instance: Store;
     private resources: Array<Resource>;
     private loaders: {fbx: FBXLoader}
@@ -36,7 +36,7 @@ export default class Store implements IStore {
 
     public getResource(url: string, type: ResourceType): Promise<Resource> {
         return new Promise(resolve => {
-            let exist = this.findResourcesInStore(url, type);
+            const exist = this.findResourcesInStore(url, type);
             let resource: Resource = null;
 
             if (exist == null) {
@@ -58,7 +58,7 @@ export default class Store implements IStore {
 
     private findResourcesInStore(url: string, type: ResourceType): Resource | null {
         let resource = null;
-        this.resources.forEach((item, index) => {
+        this.resources.forEach((item) => {
             if (item.url == url && item.type == type) {
                 resource = item;
             }

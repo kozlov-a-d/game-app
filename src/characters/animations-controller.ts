@@ -2,16 +2,16 @@ import { AnimationMixer, AnimationClip } from "three";
 import Store from '../store';
 import { AnimationAction } from "three/src/animation/AnimationAction";
 
-export interface IAnimationsController {
-    list: { [key: string]: any; };
-    init(animationsList: { [key: string]: string; }[]): any;
+export default interface AnimationsController {
+    list: { [key: string]: any };
+    init(animationsList: { [key: string]: string }[]): any;
     changeTo(name: string): void;
-    update(deltaTime: number) : void;
+    update(deltaTime: number): void;
 }
 
-export default class AnimationsController implements IAnimationsController{
+export default class AnimationsController implements AnimationsController{
     mixer: AnimationMixer;
-    list: { [key: string]: any; };
+    list: { [key: string]: any };
     current: string;
     store: Store;
 
@@ -53,16 +53,16 @@ export default class AnimationsController implements IAnimationsController{
 
     changeTo(nextAnimation: string): void {
 
-        function setWeight( action: AnimationAction, weight: number ) {
+        function setWeight( action: AnimationAction, weight: number ): void {
             action.enabled = true;
             action.setEffectiveTimeScale( 1 );
             action.setEffectiveWeight( weight );
         }
 
-        function crossFade( startAction: AnimationAction, endAction: AnimationAction, duration: number ) {
-            let timerId: any;
+        function crossFade( startAction: AnimationAction, endAction: AnimationAction, duration: number ): void {
+            let timerId: any = null;
             let step = 0;
-            let totalSteps = 10;
+            const totalSteps = 10;
 
             step = 0;
             clearInterval(timerId);

@@ -1,16 +1,15 @@
-import { Mesh, Scene, BoxGeometry, MeshToonMaterial, AnimationMixer, Vector3, Group } from "three";
-import * as MathHelper from '../utils/math-helper';
+import { Scene, AnimationMixer, Group } from "three";
 import Store from '../store';
 import AnimationsController from "./animations-controller";
 
-interface IBody {
-    init(resources: any): Promise<void>
+export default interface Body {
+    init(resources: any): Promise<void>;
     appendToScene(scene: Scene): void;
     getMesh(): Group;
     move(position: {x: number, y: number, z: number}, rotation: {x: number, y: number, z: number}): void;
 }
 
-export default class Body implements IBody{
+export default class Body implements Body{
     private store: Store;
     public mesh: Group;
     private mixer: AnimationMixer;
@@ -44,20 +43,20 @@ export default class Body implements IBody{
     private loadMesh(url: string): Promise<{mixer: AnimationMixer, object: Group}> {
         return new Promise((resolve) => {
             this.store.getResource(url, 'model').then((data) => {
-                let object = data.content;
-                let mixer = new AnimationMixer(object);
+                const object = data.content;
+                const mixer = new AnimationMixer(object);
                 
                 object.traverse( function ( child ) {
                     child.castShadow = true;
                     child.receiveShadow = true;
                 } );
     
-                let scaleModify = 0.013;
+                const scaleModify = 0.013;
                 object.scale.x = scaleModify;
                 object.scale.y = scaleModify;
                 object.scale.z = scaleModify;
     
-                let result = {
+                const result = {
                     mixer: mixer,
                     object: object
                 }
@@ -70,7 +69,7 @@ export default class Body implements IBody{
         return this.animations.init(animations);
     }
 
-    public updateMixer(deltaTime:number): void {
+    public updateMixer(deltaTime: number): void {
         if ( this.mixer && deltaTime > 0 ) {
             this.mixer.update( deltaTime/1000 );
         };
@@ -80,7 +79,7 @@ export default class Body implements IBody{
         return this.mesh
     }
 
-    public move(position: {x: number, y: number, z: number}, rotation: {x: number, y: number, z: number}): void {
+    public move(position: {x: number; y: number; z: number }, rotation: {x: number; y: number; z: number }): void {
         this.mesh.position.x = position.x;
         this.mesh.position.y = position.y;
         this.mesh.position.z = position.z;

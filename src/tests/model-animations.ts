@@ -37,7 +37,7 @@ export default class TestModelAnimations {
         this.loader = new FBXLoader();
 
         this.loader.load('build/assets/models/character.fbx', ( object ) => {
-            let clone = this.clone(object);
+            const clone = this.clone(object);
             console.log(object);
             // this.mixer = new AnimationMixer(clone);
             
@@ -46,7 +46,7 @@ export default class TestModelAnimations {
                 child.receiveShadow = true;
             } );
 
-            let scaleModify = 0.013;
+            const scaleModify = 0.013;
             clone.scale.x = scaleModify;
             clone.scale.y = scaleModify;
             clone.scale.z = scaleModify;
@@ -63,7 +63,7 @@ export default class TestModelAnimations {
             this.scene.add(this.mesh1);
 
 
-            let clone2 = this.clone(object);
+            const clone2 = this.clone(object);
             console.log(object);
             // this.mixer = new AnimationMixer(clone);
             
@@ -91,17 +91,17 @@ export default class TestModelAnimations {
             
         });
 
-        // this.run();
+        this.run();
         this.container.classList.add('is-loaded');
     }
 
     initLevel(): Mesh {
-        var axesHelper = new AxesHelper( 5 );
+        const axesHelper = new AxesHelper( 5 );
         this.scene.add( axesHelper );
 
-        var geometry = new PlaneGeometry( 20, 20, 1 );
-        var material = new MeshBasicMaterial( {color: 0xcccccc, side: DoubleSide} );
-        var plane = new Mesh( geometry, material );
+        const geometry = new PlaneGeometry( 20, 20, 1 );
+        const material = new MeshBasicMaterial( {color: 0xcccccc, side: DoubleSide} );
+        const plane = new Mesh( geometry, material );
         this.scene.add( plane );
 
         return plane;
@@ -113,7 +113,7 @@ export default class TestModelAnimations {
 
             callback( a, b );
         
-            for ( var i = 0; i < a.children.length; i ++ ) {
+            for ( let i = 0; i < a.children.length; i ++ ) {
         
                 parallelTraverse( a.children[ i ], b.children[ i ], callback );
         
@@ -121,10 +121,10 @@ export default class TestModelAnimations {
         
         }
 
-        var sourceLookup = new Map();
-		var cloneLookup = new Map();
+        const sourceLookup = new Map();
+		const cloneLookup = new Map();
 
-		var clone = source.clone();
+		const clone = source.clone();
 
 		parallelTraverse( source, clone, function ( sourceNode: any, clonedNode: any ) {
 
@@ -137,9 +137,9 @@ export default class TestModelAnimations {
 
 			if ( ! node.isSkinnedMesh ) return;
 
-			var clonedMesh = node;
-			var sourceMesh = sourceLookup.get( node );
-			var sourceBones = sourceMesh.skeleton.bones;
+			const clonedMesh = node;
+			const sourceMesh = sourceLookup.get( node );
+			const sourceBones = sourceMesh.skeleton.bones;
 
 			clonedMesh.skeleton = sourceMesh.skeleton.clone();
 			clonedMesh.bindMatrix.copy( sourceMesh.bindMatrix );
@@ -157,8 +157,8 @@ export default class TestModelAnimations {
 		return clone;
     }
 
-    initGlobalLight() {
-        var dirLight = new DirectionalLight( 0xffffff );
+    initGlobalLight(): void {
+        const dirLight = new DirectionalLight( 0xffffff );
         dirLight.position.set( - 3, -10, 10 );
         dirLight.castShadow = true;
         dirLight.shadow.camera.top = 2;
@@ -170,7 +170,7 @@ export default class TestModelAnimations {
         this.scene.add( dirLight );
     }
 
-    update(deltaTime: number) {
+    update(deltaTime: number): void {
 
     }
 
