@@ -1,11 +1,13 @@
 {
+  "index.css": "/index.css",
   "index.js": "/index.js",
   "runtime.js": "/runtime.js",
   "assets/audio/weapon--beretta-m9--misfire.mp3": "/./assets/audio/weapon--beretta-m9--misfire.mp3",
   "assets/audio/weapon--beretta-m9--reload.mp3": "/./assets/audio/weapon--beretta-m9--reload.mp3",
   "assets/audio/weapon--beretta-m9--shoot.mp3": "/./assets/audio/weapon--beretta-m9--shoot.mp3",
-  "assets/images/frontend_assets_images_loader.svg": "/./assets/images/frontend_assets_images_loader.svg",
+  "assets/images/favicon.ico": "/./assets/images/favicon.ico",
   "assets/images/ground0004.jpg": "/./assets/images/ground0004.jpg",
+  "assets/images/loader.svg": "/./assets/images/loader.svg",
   "assets/images/wall0008.jpg": "/./assets/images/wall0008.jpg",
   "assets/models/character.fbx": "/./assets/models/character.fbx",
   "assets/models/character@death-nogun.fbx": "/./assets/models/character@death-nogun.fbx",
@@ -44,9 +46,5 @@
   "assets/models/character@shoot-rifle-run-left.fbx": "/./assets/models/character@shoot-rifle-run-left.fbx",
   "assets/models/character@shoot-rifle-run-right.fbx": "/./assets/models/character@shoot-rifle-run-right.fbx",
   "assets/models/character@shoot-rifle-stay.fbx": "/./assets/models/character@shoot-rifle-stay.fbx",
-  "assets/models/player.fbx": "/./assets/models/player.fbx",
-  "assets/images/loader.svg": "/./assets/images/loader.svg",
-  "index.css": "/index.css",
-  "assets/images/favicon.ico": "/./assets/images/favicon.ico",
-  "images/favicon.ico": "/images/favicon.5b011902.ico"
+  "assets/models/player.fbx": "/./assets/models/player.fbx"
 }

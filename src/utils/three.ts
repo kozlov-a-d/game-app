@@ -1,4 +1,5 @@
 import { WebGLRenderer, PerspectiveCamera, AmbientLight, PlaneGeometry, MeshLambertMaterial, DoubleSide, Mesh, BoxGeometry, Color, Group, Bone } from 'three';
+import { AnimationAction } from 'three/src/animation/AnimationAction';
 
 // COMMON
 
@@ -61,9 +62,7 @@ export function createBox(position: {x: number; y: number; z: number}): Mesh {
     return box;
 }
 
-type CallbackFunctionVariadic = (...args: any[]) => void;
-
-function parallelTraverse( a: any, b: any, callback: CallbackFunctionVariadic ): void {
+function parallelTraverse( a: any, b: any, callback: (...args: any[]) => void ): void {
     callback( a, b );
     for ( let i = 0; i < a.children.length; i ++ ) {
         parallelTraverse( a.children[ i ], b.children[ i ], callback );
@@ -71,7 +70,6 @@ function parallelTraverse( a: any, b: any, callback: CallbackFunctionVariadic ):
 }
 
 export function cloneSkinnedMeshes( source: Group ): Group {
-
     const sourceLookup = new Map();
     const cloneLookup = new Map();
 
@@ -100,4 +98,27 @@ export function cloneSkinnedMeshes( source: Group ): Group {
     } );
 
     return clone;
+}
+
+export function animationSetWeight( action: AnimationAction, weight: number ): void {
+    action.enabled = true;
+    action.setEffectiveTimeScale( 1 );
+    action.setEffectiveWeight( weight );
+}
+
+export function animationsCrossFade( startAction: AnimationAction, endAction: AnimationAction, duration: number ): void {
+    let timerId: NodeJS.Timeout = null;
+    let step = 0;
+    const totalSteps = 10;
+
+    step = 0;
+    clearInterval(timerId);
+    timerId = setInterval(() => {
+        step++;
+        animationSetWeight(startAction, 1 - step/totalSteps);
+        animationSetWeight(endAction, step/totalSteps);
+        if (step >= totalSteps) {
+            clearInterval(timerId);
+        }
+    }, duration * 1000 / totalSteps);
 }

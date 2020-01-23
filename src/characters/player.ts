@@ -1,7 +1,8 @@
-import { Camera, Mesh, Scene } from "three";
+import { Camera, Mesh, Scene, AnimationMixer } from "three";
 import Body from "./body";
 import Inputs from "./inputs";
 import ActionsController from "./actions-controller";
+import AnimationsController from "./animations-controller";
 import Utils from '../utils/';
 import Store from "../store";
 
@@ -11,14 +12,14 @@ export default class Player {
     body: Body;
     collider: Mesh;
     inputs: Inputs;
-    actionsController: ActionsController;
+    animations: AnimationsController;
+    actions: ActionsController;
     camera: Camera | null;
-    store: Store;
     config: { resources: { model: string; animations: Array<{ [key: string]: string }>; audio: string }};
 
     constructor() {
         this.position = { x: 4, y: 4, z: 0};
-        this.rotation = { x: 270 * Math.PI/180, y: 0, z: 180 * Math.PI/180};
+        this.rotation = { x: Utils.math.DegreeToRadian(270), y: 0, z: Utils.math.DegreeToRadian(180)};
         const path = 'build/assets/models/';
         this.config = {
             resources: {
@@ -38,32 +39,32 @@ export default class Player {
             }
         }
 
-        this.store = Store.getInstance();
         this.inputs = new Inputs();
-        this.actionsController = new ActionsController();
+        this.animations = null;
+        this.actions = new ActionsController();
     }
 
     init(scene: Scene, camera: Camera): Promise<Player> {
         return new Promise((resolve) => {
-
-            this.store.getResource(this.config.resources.model, 'model').then((data) => {
-                console.log('loadPlayerBody'); 
+            Store.getInstance().getResource(this.config.resources.model, 'model').then((data) => {
                 const model = Utils.three.cloneSkinnedMeshes(data.content);
                 this.body = new Body(model);
-                this.body.appendToScene(scene);
+                scene.add(this.body.mesh);
                 this.useCamera(camera);
                 this.setPosition(18, 18, 0.001);
 
-                resolve(this);
+                this.animations = new AnimationsController(new AnimationMixer(model));
+                this.loadAnimations(this.config.resources.animations).then(() => {
+                    resolve(this);
+                }); 
+               
             });
         });
     }
 
-    // loadResources(): Promise<void> {
-    //     return new Promise((resolve) => {
-
-    //     });
-    // }
+    private loadAnimations(animations: { [key: string]: string }[]): Promise<void> {
+        return this.animations.init(animations);
+    }
 
     moveCamera(): void {
         if (this.camera) {
@@ -78,16 +79,16 @@ export default class Player {
 
     move(inputsState: { [key: string]: boolean }, deltaTime: number): void {
         if (inputsState.up || inputsState.down || inputsState.left || inputsState.right) {
-            const newPosition = this.actionsController.getNewPosition(this.position, inputsState, this.rotation.y, deltaTime);
+            const newPosition = this.actions.getNewPosition(this.position, inputsState, this.rotation.y, deltaTime);
             const moveDirection = Utils.math.calcAngleFromAxisY({x: newPosition.x - this.position.x, y: newPosition.y - this.position.y});
-            const moveDirectionTitle = this.actionsController.calcRelativeDirectionOfMovement(this.rotation.y, moveDirection);
+            const moveDirectionTitle = this.actions.calcRelativeDirectionOfMovement(this.rotation.y, moveDirection);
             // TODO: проверка колайдера
 
             // вызов анимации по moveDirectionTitle
-            // this.body.animations.changeTo('shoot-rifle-run-' + moveDirectionTitle);
+            this.animations.changeTo('shoot-rifle-run-' + moveDirectionTitle);
             this.position = newPosition; 
         } else {
-            // this.body.animations.changeTo('idle-rifle-stay');
+            this.animations.changeTo('idle-rifle-stay');
         }
     }
 
@@ -95,7 +96,7 @@ export default class Player {
         this.rotation.y = -this.inputs.getMouseRotation();
         this.move(this.inputs.getStates(), deltaTime);
         this.body.move(this.position, this.rotation);
-        this.body.updateMixer(deltaTime);
+        this.animations.update(deltaTime);
         this.moveCamera();
     }
 
