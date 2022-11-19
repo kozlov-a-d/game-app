@@ -11,7 +11,7 @@
         "@babel/core": "^7.7.7",
         "@babel/preset-env": "^7.7.7",
         "@babel/register": "^7.7.7",
-        "@symfony/webpack-encore": "^0.28.2",
+        "@symfony/webpack-encore": "^4.1.1",
         "@types/chai": "^4.2.7",
         "@types/mocha": "^5.2.7",
         "@typescript-eslint/eslint-plugin": "^2.17.0",
